@@ -1,0 +1,12 @@
+<div class="kicker">{{ i18n.t().kit }}</div>
+<h1>{{ i18n.t().kit }}</h1>
+<p class="mute">{{ i18n.t().kitHint }}</p>
+@if (kit(); as current) {
+  <app-kit-editor
+    [kit]="current"
+    [t]="i18n.t()"
+    [rulesHu]="rulesHu()"
+    [rulesEn]="rulesEn()"
+    (save)="save()"
+  />
+}

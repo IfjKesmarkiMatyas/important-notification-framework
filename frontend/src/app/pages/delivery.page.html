@@ -1,0 +1,45 @@
+<div class="kicker">{{ i18n.t().delivery }}</div>
+<h1>{{ i18n.t().delivery }}</h1>
+
+<form class="test" (ngSubmit)="test()">
+  <label class="field">
+    <span>{{ i18n.t().channel }}</span>
+    <select name="channel" [(ngModel)]="channel">
+      <option value="email">email</option>
+      <option value="slack">slack</option>
+      <option value="pushover">pushover</option>
+    </select>
+  </label>
+  <label class="field">
+    <span>{{ i18n.t().recipient }}</span>
+    <input name="recipient" [(ngModel)]="recipient" required />
+  </label>
+  <button class="btn" type="submit">{{ i18n.t().testSend }}</button>
+</form>
+
+<table class="data">
+  <thead>
+    <tr>
+      <th>purpose</th>
+      <th>{{ i18n.t().channel }}</th>
+      <th>{{ i18n.t().recipient }}</th>
+      <th>status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (job of jobs(); track job.id) {
+      <tr>
+        <td>{{ job.purpose }}</td>
+        <td>{{ job.channel }}</td>
+        <td>{{ job.recipient }}</td>
+        <td [class.danger-text]="job.status === 'failed'">{{ job.status }}</td>
+        <td>
+          @if (job.errorMessage) {
+            <span class="danger-text">{{ job.errorMessage }}</span>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

@@ -1,0 +1,8 @@
+{
+  "locale": "en",
+  "rules": [
+    { "when": "disaster.earthquake.minMagnitude", "level": "critical" },
+    { "when": "market.movePercent", "level": "high" },
+    { "when": "breaking", "level": "medium" }
+  ]
+}

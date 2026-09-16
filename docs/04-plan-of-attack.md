@@ -49,7 +49,7 @@ A D0 szabálykönyv (mindhárom eseménycsalád, zárt típusok) a kézbesítés
 | 1.2 | D5 Slack chatbot | Ugyanaz a megbízásmodell chatbotként kimegy? |
 | 1.3 | D11 a kézbesítésre | Tesztküldés MCP-n (admin gépuser) is megy? |
 
-**Döntési kapu:** két tesztcímzett (A email, B Slack chatbot) megkapja a **bedobott** megbízást. A kézbesítő nem dönt és nem scrape-el. Ami már bent van a deliveryben, **kimegy**.
+**Döntési kapu:** két tesztcímzett (A email, B Slack chatbot) megkapja a **bedobott** megbízást. A kézbesítő nem dönt és nem scrape-el. Ami már bent van a deliveryben, **kimegy**. Az `INVITE` sablon renderelhető; éles meghívás a 2. fázis.
 
 ---
 
@@ -64,7 +64,7 @@ A D0 szabálykönyv (mindhárom eseménycsalád, zárt típusok) a kézbesítés
 | 2.5 | D7/D8 váz | Van admin felület a userekre és a későbbi nyomvonal helyére? |
 | 2.6 | D11 a UI-ra | Meghívás + kit írás MCP-n, admin gépuserrel? |
 
-**Döntési kapu:** két meghívott user, két különböző kit. Defaultból indultak, utána eltérnek. Admin átírja A kitjét; A látja. Nincs digest-kapcsoló.
+**Döntési kapu:** seed admin belép. Meghív két usert a People képernyőn; a **delivery** viszi az `INVITE` emailt. Elfogadás után default kit másolat, a két kit eltér. Failed meghívó látszik, újra küldhető. Nincs digest, nincs `/register`. Terv: [10-delivery-ui-users/](10-delivery-ui-users/).
 
 ---
 

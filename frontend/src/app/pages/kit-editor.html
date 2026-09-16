@@ -1,0 +1,240 @@
+<div class="wizard">
+  <nav class="steps" aria-label="wizard">
+    <button type="button" class="step" [class.on]="step === 1" (click)="go(1)">
+      <span>1</span>{{ t.stepChannels }}
+    </button>
+    <button type="button" class="step" [class.on]="step === 2" (click)="go(2)">
+      <span>2</span>{{ t.stepInterests }}
+    </button>
+    <button type="button" class="step" [class.on]="step === 3" (click)="go(3)">
+      <span>3</span>{{ t.stepRules }}
+    </button>
+  </nav>
+
+  @if (step === 1) {
+    <section class="panel">
+      <div class="kicker">{{ t.channels }}</div>
+      <p class="mute lead">{{ t.destHint }}</p>
+      <div class="channel-row">
+        <div class="channel-cell" [class.active]="kit.preferences.channels.email">
+          <div>
+            <strong>Email</strong>
+            <small>{{ kit.preferences.channels.email ? t.on : t.off }}</small>
+          </div>
+          <button
+            type="button"
+            class="slider"
+            role="switch"
+            [attr.aria-checked]="kit.preferences.channels.email"
+            [class.on]="kit.preferences.channels.email"
+            (click)="toggleChannel('email')"
+          >
+            <span class="knob"></span>
+          </button>
+        </div>
+        <div class="channel-cell" [class.active]="kit.preferences.channels.slack">
+          <div>
+            <strong>Slack</strong>
+            <small>{{ kit.preferences.channels.slack ? t.on : t.off }}</small>
+          </div>
+          <button
+            type="button"
+            class="slider"
+            role="switch"
+            [attr.aria-checked]="kit.preferences.channels.slack"
+            [class.on]="kit.preferences.channels.slack"
+            (click)="toggleChannel('slack')"
+          >
+            <span class="knob"></span>
+          </button>
+        </div>
+        <div class="channel-cell" [class.active]="kit.preferences.channels.pushover">
+          <div>
+            <strong>Pushover</strong>
+            <small>{{ kit.preferences.channels.pushover ? t.on : t.off }}</small>
+          </div>
+          <button
+            type="button"
+            class="slider"
+            role="switch"
+            [attr.aria-checked]="kit.preferences.channels.pushover"
+            [class.on]="kit.preferences.channels.pushover"
+            (click)="toggleChannel('pushover')"
+          >
+            <span class="knob"></span>
+          </button>
+        </div>
+      </div>
+      <div class="dest-row">
+        <label class="field">
+          <span>{{ t.email }}</span>
+          <input name="prefEmail" [(ngModel)]="kit.preferences.email" [disabled]="!kit.preferences.channels.email" />
+        </label>
+        <label class="field">
+          <span>{{ t.slackUserId }}</span>
+          <input name="slackUser" [(ngModel)]="kit.preferences.slack.userId" [disabled]="!kit.preferences.channels.slack" />
+        </label>
+        <label class="field">
+          <span>{{ t.pushoverKey }}</span>
+          <input name="pushover" [(ngModel)]="kit.preferences.pushoverUserKey" [disabled]="!kit.preferences.channels.pushover" />
+        </label>
+      </div>
+    </section>
+  }
+
+  @if (step === 2) {
+    <section class="panel">
+      <div class="kicker">{{ t.interests }}</div>
+      @if (kit.interests.length === 0) {
+        <p class="mute lead">{{ t.emptyInterests }}</p>
+      }
+      <div class="cards">
+        @for (item of kit.interests; track $index; let i = $index) {
+          <article class="card" [attr.data-type]="item.type">
+            <header>
+              <span class="badge">{{ item.type }}</span>
+              <button class="btn ghost tiny" type="button" (click)="removeInterest(i)">{{ t.remove }}</button>
+            </header>
+            @if (item.type === 'disaster') {
+              <label class="field">
+                <span>{{ t.kind }}</span>
+                <select [(ngModel)]="item.kind" [name]="'kind' + i">
+                  <option value="earthquake">{{ t.earthquake }}</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>{{ t.magnitude }} · {{ item.minMagnitude }}</span>
+                <input
+                  type="range"
+                  min="4"
+                  max="9"
+                  step="1"
+                  [ngModel]="item.minMagnitude"
+                  (ngModelChange)="item.minMagnitude = +$event"
+                  [name]="'mag' + i"
+                />
+              </label>
+            }
+            @if (item.type === 'market') {
+              <label class="field">
+                <span>{{ t.instrument }}</span>
+                <input [(ngModel)]="item.instrument" [name]="'inst' + i" />
+              </label>
+              <label class="field">
+                <span>{{ t.movePercent }} · {{ item.movePercent }}%</span>
+                <input
+                  type="range"
+                  min="1"
+                  max="20"
+                  step="1"
+                  [ngModel]="item.movePercent"
+                  (ngModelChange)="item.movePercent = +$event"
+                  [name]="'move' + i"
+                />
+              </label>
+            }
+            @if (item.type === 'breaking') {
+              <span class="field-label">{{ t.topics }}</span>
+              <div class="chips">
+                @for (topic of item.topics ?? []; track topic) {
+                  <button class="chip" type="button" (click)="removeTopic(i, topic)">{{ topic }} ×</button>
+                }
+              </div>
+              <input
+                class="chip-input"
+                [ngModel]="topicDraft[i] || ''"
+                (ngModelChange)="topicDraft[i] = $event"
+                (keydown.enter)="addTopic(i); $event.preventDefault()"
+                [placeholder]="t.topicAdd"
+                [name]="'topics' + i"
+              />
+            }
+          </article>
+        }
+        <div class="add-cards">
+          <button type="button" class="add-card" (click)="addInterest('breaking')">+ {{ t.addBreaking }}</button>
+          <button type="button" class="add-card" (click)="addInterest('market')">+ {{ t.addMarket }}</button>
+          <button type="button" class="add-card" (click)="addInterest('disaster')">+ {{ t.addDisaster }}</button>
+        </div>
+      </div>
+    </section>
+  }
+
+  @if (step === 3) {
+    <section class="panel">
+      <div class="kicker">{{ t.stepRules }}</div>
+      <div class="rule-cols">
+        <div>
+          <h2>{{ t.rulesHu }}</h2>
+          <div class="cards compact">
+            @for (rule of rulesHu.rules; track $index; let i = $index) {
+              <article class="card">
+                <header>
+                  <span class="badge">{{ whenLabel(rule.when) }}</span>
+                  <button class="btn ghost tiny" type="button" (click)="removeRule(rulesHu, i)">{{ t.remove }}</button>
+                </header>
+                <label class="field">
+                  <span>{{ t.ruleWhen }}</span>
+                  <select [(ngModel)]="rule.when" [name]="'huWhen' + i">
+                    @for (option of whenOptions; track option) {
+                      <option [value]="option">{{ whenLabel(option) }}</option>
+                    }
+                  </select>
+                </label>
+                <label class="field">
+                  <span>{{ t.ruleLevel }}</span>
+                  <select [(ngModel)]="rule.level" [name]="'huLevel' + i">
+                    @for (level of levels; track level) {
+                      <option [value]="level">{{ levelLabel(level) }}</option>
+                    }
+                  </select>
+                </label>
+              </article>
+            }
+            <button type="button" class="add-card" (click)="addRule(rulesHu)">+ {{ t.addRule }}</button>
+          </div>
+        </div>
+        <div>
+          <h2>{{ t.rulesEn }}</h2>
+          <div class="cards compact">
+            @for (rule of rulesEn.rules; track $index; let i = $index) {
+              <article class="card">
+                <header>
+                  <span class="badge">{{ whenLabel(rule.when) }}</span>
+                  <button class="btn ghost tiny" type="button" (click)="removeRule(rulesEn, i)">{{ t.remove }}</button>
+                </header>
+                <label class="field">
+                  <span>{{ t.ruleWhen }}</span>
+                  <select [(ngModel)]="rule.when" [name]="'enWhen' + i">
+                    @for (option of whenOptions; track option) {
+                      <option [value]="option">{{ whenLabel(option) }}</option>
+                    }
+                  </select>
+                </label>
+                <label class="field">
+                  <span>{{ t.ruleLevel }}</span>
+                  <select [(ngModel)]="rule.level" [name]="'enLevel' + i">
+                    @for (level of levels; track level) {
+                      <option [value]="level">{{ levelLabel(level) }}</option>
+                    }
+                  </select>
+                </label>
+              </article>
+            }
+            <button type="button" class="add-card" (click)="addRule(rulesEn)">+ {{ t.addRule }}</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  }
+
+  <footer class="wizard-bar">
+    <button class="btn ghost" type="button" (click)="back()" [disabled]="step === 1">{{ t.back }}</button>
+    <div class="bar-end">
+      @if (step < 3) {
+        <button class="btn ghost" type="button" (click)="next()">{{ t.next }}</button>
+      }
+      <button class="btn" type="button" (click)="save.emit()">{{ t.save }}</button>
+    </div>
+  </footer>
+</div>

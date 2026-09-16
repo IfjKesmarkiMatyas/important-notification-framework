@@ -46,6 +46,7 @@ A `rules.hu.json` / `rules.en.json` ugyanennél a usernél mondja meg native mó
 - Meghívás → default kit + default rules.hu + default rules.en **másolat**.
 - A meghívott a másolatot szerkeszti (csatornát ki/be, küszöb, téma).
 - Meghívás nélkül nincs értesítés.
+- A meghívó **levelet a kézbesítőmotor** küldi. Terv: [10-delivery-ui-users/invite-flow.md](../10-delivery-ui-users/invite-flow.md).
 
 ## Amit a usernek tudnia kell (V1)
 

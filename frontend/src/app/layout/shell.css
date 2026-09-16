@@ -1,0 +1,53 @@
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--ink-line);
+  background: var(--ink-surface);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.who {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-mute);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 12px;
+  border-left: 1px solid var(--ink-line);
+}
+
+nav {
+  display: flex;
+  gap: 18px;
+  flex: 1;
+}
+
+nav a {
+  color: var(--ink-mute);
+}
+
+nav a.on,
+nav a:hover {
+  color: var(--ink-accent);
+}
+
+.end {
+  display: flex;
+  gap: 8px;
+}
+
+main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 36px 24px 64px;
+}

@@ -1,0 +1,23 @@
+<header class="bar">
+  <div class="brand">
+    <app-logo />
+    <strong class="who">{{ auth.user()?.displayName || auth.user()?.email }}</strong>
+  </div>
+  <nav>
+    <a routerLink="/app/kit" routerLinkActive="on">{{ i18n.t().kit }}</a>
+    @if (auth.isAdmin()) {
+      <a routerLink="/admin/people" routerLinkActive="on">{{ i18n.t().people }}</a>
+      <a routerLink="/admin/delivery" routerLinkActive="on">{{ i18n.t().delivery }}</a>
+      <a routerLink="/admin/defaults" routerLinkActive="on">{{ i18n.t().defaults }}</a>
+      <a routerLink="/admin/tower" routerLinkActive="on">{{ i18n.t().tower }}</a>
+    }
+  </nav>
+  <div class="end">
+    <app-theme-toggle />
+    <button class="btn ghost icon" type="button" (click)="i18n.toggle()">{{ i18n.locale() }}</button>
+    <button class="btn ghost" type="button" (click)="logout()">{{ i18n.t().logout }}</button>
+  </div>
+</header>
+<main>
+  <router-outlet />
+</main>

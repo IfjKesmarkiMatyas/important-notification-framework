@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "preferences": {
+    "channels": { "email": true, "slack": false, "pushover": false },
+    "email": "",
+    "slack": { "mode": "chatbot", "userId": "" },
+    "pushoverUserKey": ""
+  },
+  "interests": [
+    { "type": "disaster", "kind": "earthquake", "minMagnitude": 6 },
+    { "type": "market", "instrument": "bitcoin", "movePercent": 5 },
+    { "type": "breaking", "topics": ["belfold"] }
+  ]
+}

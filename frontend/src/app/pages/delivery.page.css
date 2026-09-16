@@ -1,0 +1,13 @@
+.test {
+  display: grid;
+  grid-template-columns: 160px 1fr auto;
+  gap: 12px;
+  align-items: end;
+  margin: 8px 0 28px;
+}
+
+@media (max-width: 720px) {
+  .test {
+    grid-template-columns: 1fr;
+  }
+}

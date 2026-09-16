@@ -1,0 +1,22 @@
+<section class="wrap">
+  <div class="auth-tools">
+    <app-theme-toggle />
+    <button class="btn ghost icon" type="button" (click)="i18n.toggle()">{{ i18n.locale() }}</button>
+  </div>
+  <div class="panel narrow">
+    <app-logo size="lg" />
+    <h1>{{ i18n.t().login }}</h1>
+    <p class="mute">{{ i18n.t().noRegister }}</p>
+    <form (ngSubmit)="submit()">
+      <label class="field">
+        <span>{{ i18n.t().email }}</span>
+        <input name="email" type="email" [(ngModel)]="email" required autocomplete="username" />
+      </label>
+      <label class="field">
+        <span>{{ i18n.t().password }}</span>
+        <input name="password" type="password" [(ngModel)]="password" required autocomplete="current-password" />
+      </label>
+      <button class="btn" type="submit" [disabled]="busy()">{{ i18n.t().login }}</button>
+    </form>
+  </div>
+</section>

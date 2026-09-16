@@ -1,0 +1,66 @@
+<div class="kicker">{{ i18n.t().people }}</div>
+<h1>{{ i18n.t().people }}</h1>
+
+<form class="invite" (ngSubmit)="invite()">
+  <label class="field">
+    <span>{{ i18n.t().email }}</span>
+    <input name="email" type="email" [(ngModel)]="email" required />
+  </label>
+  <label class="field">
+    <span>{{ i18n.t().locale }}</span>
+    <select name="locale" [(ngModel)]="locale">
+      <option value="hu">hu</option>
+      <option value="en">en</option>
+    </select>
+  </label>
+  <button class="btn" type="submit">{{ i18n.t().invite }}</button>
+</form>
+
+@if (!loaded()) {
+  <p class="mute">…</p>
+} @else if (users().length === 0) {
+  <p class="mute">{{ i18n.t().emptyPeople }}</p>
+} @else {
+  <table class="data">
+    <thead>
+      <tr>
+        <th>{{ i18n.t().email }}</th>
+        <th>role</th>
+        <th>status</th>
+        <th>invite</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users(); track user.id) {
+        <tr>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.status }}</td>
+          <td>
+            @if (user.lastInviteStatus) {
+              <div [class.danger-text]="user.lastInviteStatus === 'failed'">
+                {{ user.lastInviteStatus }}
+              </div>
+              @if (user.lastInviteError) {
+                <div class="mute">{{ user.lastInviteError }}</div>
+              }
+            }
+          </td>
+          <td class="row-actions">
+            @if (user.status === 'INVITED') {
+              <button class="btn ghost" type="button" (click)="resend(user)">{{ i18n.t().resend }}</button>
+              <button class="btn ghost" type="button" (click)="revoke(user)">{{ i18n.t().revoke }}</button>
+            }
+            @if (user.status === 'ACTIVE' && user.role !== 'ADMIN') {
+              <button class="btn danger" type="button" (click)="deactivate(user)">{{ i18n.t().deactivate }}</button>
+            }
+            @if (user.status === 'ACTIVE') {
+              <a class="btn ghost" [routerLink]="['/admin/people', user.id]">{{ i18n.t().openKit }}</a>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

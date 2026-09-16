@@ -42,6 +42,6 @@ Ami **már bent van** a deliveryben, **kimegy**. Preferencia-váltás nem hívja
 | Slack bukás | státusz sikertelen, a megbízás ettől döntésnek marad „jó” |
 | Kit változás küldés közben | a bent lévő megbízás **kimegy** |
 
-## Csatorna mint termékígéret
+A meghívás **ezen a motoron** megy ki (`purpose=INVITE`). Részletes terv: [10-delivery-ui-users/](../10-delivery-ui-users/).
 
 Két élő csatorna, ugyanaz a megbízásmodell. Harmadik később. A chatbot nem külön termék az adminon.

@@ -1,0 +1,219 @@
+@import '@angular/material/prebuilt-themes/azure-blue.css';
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --ink-bg: #0c0e12;
+  --ink-surface: #14181f;
+  --ink-input: #10141b;
+  --ink-line: rgba(244, 241, 234, 0.08);
+  --ink-text: #f4f1ea;
+  --ink-mute: #8a909a;
+  --ink-accent: #c8f54a;
+  --ink-on-accent: #0c0e12;
+  --ink-danger: #ff6b4a;
+  --ink-on-danger: #160804;
+  --ink-radius: 12px;
+  --ink-accent-soft: rgba(200, 245, 74, 0.25);
+  --ink-accent-line: rgba(200, 245, 74, 0.4);
+  --ink-dash: rgba(244, 241, 234, 0.16);
+  --ink-slider-off: #2a303a;
+  --ink-knob: #f4f1ea;
+  --ink-snack-bg: #14181f;
+  --mat-sys-primary: #c8f54a;
+  --mat-sys-on-primary: #0c0e12;
+  --mat-sys-surface: #14181f;
+  --mat-sys-on-surface: #f4f1ea;
+  --mat-sys-error: #ff6b4a;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --ink-bg: #f3f0e8;
+  --ink-surface: #fffcf6;
+  --ink-input: #ffffff;
+  --ink-line: rgba(12, 14, 18, 0.1);
+  --ink-text: #14161c;
+  --ink-mute: #5e6570;
+  --ink-accent: #6f9a12;
+  --ink-on-accent: #0c0e12;
+  --ink-danger: #d6452c;
+  --ink-on-danger: #fff6f3;
+  --ink-accent-soft: rgba(111, 154, 18, 0.22);
+  --ink-accent-line: rgba(111, 154, 18, 0.45);
+  --ink-dash: rgba(12, 14, 18, 0.16);
+  --ink-slider-off: #d8d3c8;
+  --ink-knob: #fffcf6;
+  --ink-snack-bg: #1c2018;
+  --mat-sys-primary: #6f9a12;
+  --mat-sys-on-primary: #0c0e12;
+  --mat-sys-surface: #fffcf6;
+  --mat-sys-on-surface: #14161c;
+  --mat-sys-error: #d6452c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--ink-bg);
+  color: var(--ink-text);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--ink-accent);
+  text-decoration: none;
+}
+
+.panel {
+  background: var(--ink-surface);
+  border: 1px solid var(--ink-line);
+  border-radius: var(--ink-radius);
+  padding: 28px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field span,
+.field label {
+  color: var(--ink-mute);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.field input,
+.field select,
+.field textarea {
+  background: var(--ink-input);
+  border: 1px solid var(--ink-line);
+  border-radius: var(--ink-radius);
+  padding: 11px 12px;
+  outline: none;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--ink-accent);
+  box-shadow: 0 0 0 2px var(--ink-accent-soft);
+}
+
+.btn {
+  border: 0;
+  border-radius: var(--ink-radius);
+  padding: 11px 18px;
+  background: var(--ink-accent);
+  color: var(--ink-on-accent);
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--ink-text);
+  border: 1px solid var(--ink-line);
+}
+
+.btn.icon {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: lowercase;
+}
+
+.btn.danger {
+  background: var(--ink-danger);
+  color: var(--ink-on-danger);
+}
+
+.mute {
+  color: var(--ink-mute);
+}
+
+.danger-text {
+  color: var(--ink-danger);
+}
+
+.kicker {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-accent);
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 8px 0 16px;
+}
+
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.data th,
+table.data td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--ink-line);
+  vertical-align: top;
+}
+
+table.data th {
+  color: var(--ink-mute);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notif-snack {
+  background: var(--ink-snack-bg) !important;
+  color: #f4f1ea !important;
+  border: 1px solid rgba(244, 241, 234, 0.08) !important;
+}

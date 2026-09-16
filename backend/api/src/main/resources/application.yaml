@@ -1,0 +1,54 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: notif
+  datasource:
+    url: ${NOTIF_DB_URL:jdbc:postgresql://localhost:5432/notif}
+    username: ${NOTIF_DB_USER:notif}
+    password: ${NOTIF_DB_PASSWORD:notif}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+  mail:
+    host: ${NOTIF_MAIL_HOST:localhost}
+    port: ${NOTIF_MAIL_PORT:1025}
+    username: ${NOTIF_MAIL_USERNAME:}
+    password: ${NOTIF_MAIL_PASSWORD:}
+    properties:
+      mail.smtp.auth: ${NOTIF_MAIL_AUTH:false}
+      mail.smtp.starttls.enable: ${NOTIF_MAIL_STARTTLS:false}
+  ai:
+    mcp:
+      server:
+        name: notif
+        version: 0.1.0
+        type: SYNC
+        protocol: STREAMABLE
+        annotation-scanner:
+          enabled: true
+
+notif:
+  public-base-url: ${NOTIF_PUBLIC_BASE_URL:http://localhost:4200}
+  jwt:
+    secret: ${NOTIF_JWT_SECRET:change-me-to-a-long-random-secret-at-least-32-chars}
+    ttl-seconds: 86400
+  admin:
+    email: ${NOTIF_ADMIN_EMAIL:admin@notif.local}
+    password: ${NOTIF_ADMIN_PASSWORD:adminadmin}
+  mcp:
+    token: ${NOTIF_MCP_TOKEN:change-me-mcp-token}
+  mail:
+    from: ${NOTIF_MAIL_FROM:Notif <noreply@notif.local>}
+  slack:
+    bot-token: ${SLACK_BOT_TOKEN:}
+    test-channel-id: ${SLACK_TEST_CHANNEL_ID:}
+  pushover:
+    app-token: ${PUSHOVER_APP_TOKEN:}
+    test-user-key: ${PUSHOVER_TEST_USER_KEY:}

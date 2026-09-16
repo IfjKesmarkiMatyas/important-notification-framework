@@ -1,0 +1,11 @@
+<div class="kicker">{{ i18n.t().people }}</div>
+<h1>{{ i18n.t().personKit }}</h1>
+@if (kit(); as current) {
+  <app-kit-editor
+    [kit]="current"
+    [t]="i18n.t()"
+    [rulesHu]="rulesHu()"
+    [rulesEn]="rulesEn()"
+    (save)="save()"
+  />
+}
