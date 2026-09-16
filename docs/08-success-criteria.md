@@ -33,7 +33,7 @@ Ha a 2-es pontban a tulajdonos „majdnem jó, de…” — a szelet nincs kész
 | 7 | Admin userenként látja az okot; ami deliveryben volt, kiment | S6–S7, S1c |
 | 8 | Motorhiba helye + MCP admin gépuserrel | S8, D11 |
 
-**Plus:** Slack = chatbot. MCP = admin gépuser. Nincs árnyék, nincs digest. Native F₁ a golden 65-ön: lásd [11-decision-fixtures/accuracy.md](11-decision-fixtures/accuracy.md). D9 összevonás V1-ben nem kész.
+**Plus:** Slack = chatbot. MCP = admin gépuser. Nincs árnyék, nincs digest. Native F₁ a golden 65-ön: lásd [11-decision-fixtures/accuracy.md](11-decision-fixtures/accuracy.md). D9 összevonás V1-ben nem kész. D10: a váltó a magyarázatot állítja, a FIRE-t nem.
 
 Nem V1-feltétel:
 
@@ -64,6 +64,7 @@ A V1 **nem** kész, ha a négy csatorna megy, de a magyarázat nincs — a brief
 - Van döntés, de a Slackre külön ág van írva a döntésben.
 - Van küldés, de az admin három képernyőn keresgél időbélyegekkel.
 - Az AI és a native **egyszerre** fut (árnyék).
+- Az AI dönt FIRE/NO-t a matcher helyett.
 - A funkció csak UI-n van meg, MCP „később”.
 - Az admin átírja a kitet, a döntés újraindításig a régit használja.
 - A deliveryben lévő megbízást visszavonják kitváltáskor.

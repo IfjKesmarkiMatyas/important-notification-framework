@@ -5,6 +5,8 @@ Ez a fájl **csak a user promptokat** tartalmazza, időrendben. A Cursor/agent v
 
 Összesen **32** user prompt.
 
+Verdict és review log (mit adott az AI, mit tartottunk meg): [12-ai-review.md](12-ai-review.md). Ez a fájl a nyers kérések.
+
 ## 1
 
 "We want users to be able to set up alerts so they get notified when something important happens in the world — like breaking news, market movements, natural disasters, that kind of thing. Should work for both email and Slack. Make it flexible enough that we can add more channels later. We need an admin view too."   itt ez a feladat, most még ne implementálj semmit, első körben deliverables-t határozzuk meg és a kivitelezési tervet "plan of attack" de csak üzleti szempontból, szedd ezeket elkülönithető és egyenként tesztelhető részekre is szét és ezeket dokumentáld le róla, az elképzelésem a következő, egy javaspring backend legujabb java és sping egy postgres db és egy  angular FE, a backendet megfelelkően szétválasztjuk funkciók szerint, lesz egy delivery motor ami akárhány csatornát tud támogatni interfacekkel, lesz egy döntésmotor ami tud AI, és native codeként futni ami döntéseket hoz mi fontos mi nem, mit milyen csatornán kell kiküldeni fontosság szerint, és egy scrape motor ami mindenféle interffacen keresztül tud köztük akár konkrét html scrapingel is információt leszedni a netről és normálformára hozza a döntésmotor számára, emellett egy admin felület amin minden motor adatai láthatóak és végigkövethetőek egyes hírek eredetétől döntésfolyamaton át a kiküldésig minden első körbe ezeket rakd le ha kérdésed javaslatod va ntedd fel jelezd használj docs mappát struktúráld azon belül tovább

@@ -61,7 +61,8 @@ A kapcsolódó szeletek: [05-testable-slices.md](05-testable-slices.md).
 - Olvasható magyarázat („miért kritikus”, „miért nem ment ki *ennek a usernek*”).
 - Ugyanarra a bemenetre + ugyanarra a user-állapotra **ismételhető** eredmény.
 - A döntés a **pillanatnyi** kitet olvassa.
-- Native: user `rules.hu` / `rules.en`. AI: csak ha a váltó `ai`.
+- Native: user `rules.hu` / `rules.en` adja a **szintet** is. FIRE/NO a matcheré mindkét módban.
+- AI: csak ha a váltó `ai` — akkor a **magyarázat** a modellé, a FIRE/NO nem.
 - Nincs árnyék, nincs hírszintű stop.
 
 **Nem kell:** a két agy párhuzamos futtatása.
@@ -139,14 +140,14 @@ Ez a V1 **megkülönböztető** deliverable-je. Enélkül a motorok fekete doboz
 
 ## D10 — Native / AI váltó
 
-**Mit adunk át:** egy setting, két mód. Egyszerre **egy** agy dolgozik és küld.
+**Mit adunk át:** egy setting, két **magyarázat**-mód. A FIRE/NO **mindig** a matcheré. Egyszerre **egy** mód indokol és küld.
 
 **Üzleti kész:**
 
-- Váltó `native`: a user szabályfile-jai döntenek, AI nem fut.
-- Váltó `ai`: AI dönt és küld, native nem fut mellé.
-- A nyomvonalon látszik, melyik agy volt bekapcsolva.
-- Nincs árnyéklista, nincs „AI mondta, de a szabály küldött”.
+- Váltó `native`: matcher + sablon-indok (`rules.hu` / `rules.en`); a modell nem fut.
+- Váltó `ai`: **ugyanaz** a matcher-FIRE; a `{reason}` a modellé. Kulcs nélkül fail-closed.
+- A nyomvonalon látszik a váltó állása (`engine=native|ai`).
+- Nincs árnyéklista, nincs AI-FIRE-felülírás (az később, külön flag).
 
 ---
 
@@ -174,7 +175,7 @@ Ez nem V1 utáni deliverable. A D1–D10 (és minden későbbi) **csak akkor ké
 | D7 Nyomvonal | adat | adat | adat | — | **fő** | **igen** |
 | D8 Motorállapot | adat | adat | adat | — | **fő** | **igen** |
 | D9 Dedup | részt vesz | **fő** | kevesebb zaj | érzi | látja | **igen** |
-| D10 Native/AI váltó | — | **fő** | küld a beállított aggyal | — | váltó | **igen** |
+| D10 Native/AI váltó | — | **fő** (magyarázat) | küld a matcher FIRE után | — | váltó | **igen** |
 | D11 MCP-paritás | kapu | kapu | kapu | kapu | kapu | **admin gépuser** |
 
 ---

@@ -13,7 +13,7 @@ Technikai sprintterv ez **nem**. A motorok sorrendje **lezárt**.
 1. **Kézbesítőmotor** — email + Slack chatbot, kézzel adott megbízással is tesztelhető.
 2. **UI** — meghívás, JSON kit (érdekeltség + preferencia), admin.
 3. **Gyűjtőmotor** — 15 perces cron, Telex + további POC-források.
-4. **Döntésmotor** — native **vagy** AI, **váltósetting**; nincs árnyéküzemmód.
+4. **Döntésmotor** — native **vagy** AI **magyarázat**, **váltósetting**; FIRE a matcheré; nincs árnyéküzemmód.
 
 A D0 szabálykönyv (mindhárom eseménycsalád, zárt típusok) a kézbesítés előtt / mellett lezárható papíron: nélküle a JSON kit mezői elúsznak.
 
@@ -24,7 +24,7 @@ A D0 szabálykönyv (mindhárom eseménycsalád, zárt típusok) a kézbesítés
 1. **Először a kézbesítés.** Ha a levél és a chatbot nem visz ki üzenetet, a többi motor üres ígéret.
 2. **Aztán a UI**, hogy legyen kinek és hová küldeni (meghívott user, JSON kit).
 3. **Aztán a gyűjtés**, 15 perces cronnal, folyamatosan.
-4. **Végül a döntés** köti össze a normalizált eseményt a megbízással. Native alap, AI a váltóval.
+4. **Végül a döntés** köti össze a normalizált eseményt a megbízással. FIRE a matcher; a magyarázat native vagy AI, váltóval.
 5. **A második csatorna (Slack chatbot) a bővíthetőség tesztje**, és a kézbesítő *első* fázisában már bent van, nem utólag.
 6. **Több user, élő szándék, JSON kit.** Új usernél default másolat, utána szerkesztés.
 7. **MCP-paritás minden szeleten**, admin jogú gépfelhasználóval.
@@ -92,11 +92,11 @@ A D0 szabálykönyv (mindhárom eseménycsalád, zárt típusok) a kézbesítés
 | 4.2 | D6 kit = policy | A user csatornaválasztása megy, nincs rendszer-kényszer? |
 | 4.3 | D7 teljes nyomvonal | Eredet → döntés → chatbot/email, userenként? |
 | 4.4 | D9 | Két forrás, egy világesemény, userenként egyszer? |
-| 4.5 | D10 váltó | Native ↔ AI **egy** setting; a következő döntés a beállított aggyal megy, a másik **nem** fut mellé? |
+| 4.5 | D10 váltó | Native ↔ AI **egy** setting: ugyanaz a FIRE, más magyarázat; a másik mód **nem** fut mellé? |
 | 4.6 | D11 a döntésre | Váltó + döntés MCP-n? |
 
 **Döntési kapu (első teljes demo):**  
-cron hoz egy Telex/USGS/piaci jelet → native döntés A-nak megy, B-nek nem → email és/vagy chatbot a kit szerint → admin nyomvonal. Váltó AI-ra: a **következő** esemény AI-val dől el, nem árnyékban.
+cron hoz egy Telex/USGS/piaci jelet → matcher A-nak FIRE, B-nek NO → email és/vagy chatbot a kit szerint → admin nyomvonal. Váltó AI-ra: a **következő** esemény **ugyanazzal a FIRE/NO-val** megy, a magyarázat szövege más; nem árnyék, a modell nem dönt.
 
 ---
 
@@ -105,6 +105,7 @@ cron hoz egy Telex/USGS/piaci jelet → native döntés A-nak megy, B-nek nem �
 - Harmadik éles csatorna.
 - Nyilvános signup, digest, hírszintű admin-stop.
 - Árnyéküzemmód — **kivéve**, nem „később”: **nem használjuk**.
+- AI FIRE-felülírás — később, külön flag (a modell most nem dönt kimenetelt).
 - Jogi/SLA, forrásjogi szigor — POC, most bármely forrás mehet.
 - Téves/kihagyott riasztás felelőssége — most nem foglalkozunk vele.
 
@@ -125,13 +126,13 @@ D1 meghívás + JSON kit UI       ← 2. UI
 D2 gyűjtés (15 p cron)          ← 3. GYŰJTŐ  Telex, USGS, CoinGecko
     │
     ▼
-D3 döntés (native | AI váltó)   ← 4. DÖNTÉS
+D3 döntés (matcher FIRE; magyarázat native | AI)   ← 4. DÖNTÉS
     │
     ├─► D6 = a user kitje
     ├─► D7 nyomvonal + D8 állapot
     └─► D9 dedup
 
-D10 = ugyanaz a döntésmotor, váltósetting, nem árnyék
+D10 = magyarázat-váltó, ugyanaz a FIRE, nem árnyék
 D11 MCP (admin gépuser) ── minden fázis kapuja
 ```
 
@@ -142,7 +143,7 @@ D11 MCP (admin gépuser) ── minden fázis kapuja
 1. **Fázis 1:** „bedobtam egy megbízást → levél + Slack chatbot megjött”.
 2. **Fázis 2:** „meghívtam kettőt → default kit másolat → A és B mást állított → admin átírta A-t”.
 3. **Fázis 3:** „15 perc múlva van friss Telex / földrengés / árfolyam az adminon, normalizálva”.
-4. **Fázis 4:** „A kapott, B nem; chatbot/email a kit szerint; váltó AI-ra, a következő más aggyal megy”.
+4. **Fázis 4:** „A kapott, B nem; chatbot/email a kit szerint; váltó AI-ra a FIRE ugyanaz, a reason más”.
 
 Ha egy demo nem mesélhető el így, a fázis nincs kész.
 

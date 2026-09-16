@@ -38,7 +38,7 @@ A mezőkészlet bővíthető (új szűrő, új csatornaflag), anélkül hogy a h
 }
 ```
 
-A `rules.hu.json` / `rules.en.json` ugyanennél a usernél mondja meg native módban, melyik interest milyen szintet kap. AI módban a váltó a döntésmotort állítja; a kit ettől még a „kinek / milyen csatornán” forrása.
+A `rules.hu.json` / `rules.en.json` ugyanennél a usernél mondja meg, melyik interest milyen **szintet** kap (critical / high / medium). A FIRE/NO a matcheré. A váltó `ai` csak a magyarázat szövegét cseréli; a kit továbbra is a „kinek / milyen csatornán” forrása.
 
 ## Meghívásos felvétel
 
@@ -62,7 +62,7 @@ A `rules.hu.json` / `rules.en.json` ugyanennél a usernél mondja meg native mó
 - Meghívás, visszavonás, inaktiválás.
 - Bármely user kitjének és szabályfile-jainak olvasása / írása.
 - Default sablon szerkesztése (a *következő* új user másolata ezt kapja; a meglévőkét nem írja felül magától).
-- Native / AI **váltó** a döntésmotoron (rendszer-setting, nem user-kit).
+- Native / AI **magyarázat-váltó** a döntésmotoron (rendszer-setting, nem user-kit). FIRE a matcheré.
 - Nincs hírszintű stop gomb.
 
 ## Élő frissítés

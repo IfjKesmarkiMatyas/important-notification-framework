@@ -26,7 +26,7 @@ A termék ezt a rést zárja: a felhasználó megmondja, **mire figyeljen a rend
 - **Több user**, userenként JSON **kit** (érdekeltség + preferencia + hu/en szabályfile); új usernél default másolat.
 - **Meghívásos** felvétel; a meghívott a másolatot szerkeszti.
 - Az admin ugyanezt **menet közben** frissíti. Ami már a kézbesítőben van, **kimegy**.
-- Döntés: **native vagy AI**, egy váltó — nincs árnyék.
+- Döntés: FIRE a matcheré; magyarázat **native vagy AI**, egy váltó — nincs árnyék.
 - **Minden funkció MCP-n** hívható, **admin jogú gépuserrel**.
 - Gyűjtés **15 perces cronnal**, folyamatosan; források: Telex + USGS + CoinGecko.
 - A rendszer **legalább néhány valós világforrásból** hoz be információt.
@@ -44,6 +44,7 @@ Ezek nem elvetett ötletek, hanem **későbbi szeletek**, hogy az első átadás
 - Tetszőleges számú éles csatorna (SMS, push, Teams, webhook) — a *képesség* bent van, a *többi csatorna* kint.
 - Nyilvános self-service regisztráció, fizetés, csomagok (a meghívásos saját-beállítás **bent** van).
 - Árnyéküzemmód (nem használjuk).
+- AI FIRE-felülírás (a modell nem dönt kimenetelt).
 - Napi összefoglaló, hírszintű admin-felülbírálat.
 - Közösségi média teljes lefedése, dark web, zárt adatvendorok.
 - Jogi/compliance tanúsítvány, 24/7 SLA-vállalás.

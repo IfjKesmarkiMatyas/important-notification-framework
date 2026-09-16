@@ -8,7 +8,7 @@ A normalizált esemény és a user **pillanatnyi JSON kitje** alapján eldönti:
 2. **Kinek** (A igen, B nem — normál eset),
 3. **Milyen csatornán** — **pontosan ahogy a user a kitben kérte** (bármit csinálhat, nincs rendszer-kényszer),
 4. **Miért** (magyarázat userenként),
-5. **egy** aggyal: **native vagy AI**, a **váltósetting** szerint.
+5. **egy** magyarázat-móddal: **native vagy AI**, a **váltósetting** szerint. FIRE mindig a matcheré.
 
 A kimenet: döntés + kézbesítési megbízás(ok). A küldést a kézbesítő végzi. Ami a deliverybe került, kimegy.
 
@@ -16,12 +16,12 @@ A kimenet: döntés + kézbesítési megbízás(ok). A küldést a kézbesítő 
 
 | Mód | Mikor fut | Küld-e |
 |---|---|---|
-| **Native** | A váltó `native` | Igen, a user `rules.hu` / `rules.en` file-ja szerint |
+| **Native** | A váltó `native` | FIRE a matcher szerint; sablon-indok a `rules.hu` / `rules.en` szerint |
 | **AI** | A váltó `ai` | FIRE a matcher szerint; a modell csak `{reason}`-t ír. Kulcs nélkül fail-closed. |
 | Árnyék | **Nincs** | — |
 | Hírszintű admin stop | **Nincs** | — |
 
-A váltó **rendszer-setting** (admin + MCP). A következő döntés a beállított aggyal megy; a másik **nem** fut mellé, nem hasonlítgatjuk élőben.
+A váltó **rendszer-setting** (admin + MCP). A következő döntés **magyarázata** a beállított móddal megy; FIRE ugyanaz; a másik **nem** fut mellé, nem hasonlítgatjuk élőben.
 
 A native szabály **userenként és nyelvenként** file: `rules.hu.json`, `rules.en.json` (default másolat, utána szerkeszthető). Magyar eseménynél / magyar kimenetnél a hu, angolnál az en. Az AI **nem** dönt FIRE/NO-t.
 

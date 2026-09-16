@@ -276,11 +276,11 @@ Részletes viselkedés a motoroknál: [06-capabilities/](06-capabilities/).
 | Függőség | S3 |
 | Nem kell | Árnyék, párhuzamos agy |
 
-**Történet:** váltó `native` — a szabályfile dönt és küld. Váltó `ai` — a **következő** esemény AI-val dől el és kimehet. A másik agy nem fut mellé.
+**Történet:** a **FIRE/NO mindig a matcheré** (kit küszöb / téma). A váltó csak a **magyarázatot** állítja. `native` — sablon-indok a `rules.hu` / `rules.en` szerint. `ai` — ugyanaz a FIRE/NO, a `{reason}` a modelltől; kulcs nélkül fail-closed (nincs küldés, nyomvonal `error`). A másik mód **nem** fut mellé, nincs árnyéklista.
 
-**Pass:** egy időben egy agy; a nyomvonalon látszik a váltó állása.
+**Pass:** ugyanaz az esemény + kit mindkét álláson **ugyanazt** a FIRE/NO-t adja; a nyomvonalon látszik a váltó (`native` / `ai`); `ai` + hiányzó kulcs → `error`, nincs ALERT.
 
-**Fail:** mindkét agy kimenete él, vagy az AI „csak jelzi”, de a szabály küld (árnyék).
+**Fail:** az AI felülírja a FIRE-t vagy a NO-t; mindkét agy kimenete élőben kimegy (árnyék); `ai` módban a modell dönt, a matcher nem fut.
 
 ---
 
@@ -308,7 +308,7 @@ Részletes viselkedés a motoroknál: [06-capabilities/](06-capabilities/).
 
 ## Mini-UAT csomag (V1)
 
-Ha csak egyszer tesztelünk „kész”-re, ez a 8 történet elég a V1 csomagra (D0–D8 + D11):
+Ha csak egyszer tesztelünk „kész”-re, ez a 8 történet elég a V1 csomagra (D0–D8 + D10 + D11; D9 később):
 
 1. Szabálykönyv kártyák (S0).
 2. Meghívás, saját beállítás, két user elválik (S1a, S1, S1b).
@@ -319,4 +319,4 @@ Ha csak egyszer tesztelünk „kész”-re, ez a 8 történet elég a V1 csomagr
 7. Elrontott forrás vagy Slack → melyik motor (S8).
 8. Meghívás, kit, nyomvonal, tesztküldés **MCP-n**, admin gépuserrel (D11).
 
-A D9 és a D10 váltó a 4. fázis UAT-ja.
+A D9 a 4. fázisban **szándékosan később**. A D10 / S11 váltó **bent van**: ugyanaz a FIRE, más magyarázat.

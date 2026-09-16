@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CINEGE — Notif admin felületek és Tower döntési nyomvonal áttekintése | Felhasználói kézikönyv</title>
+  <style>
+    :root {
+      --cinege-orange: #E85D04;
+      --cinege-orange-dark: #C44D00;
+      --cinege-orange-light: #FFF4EB;
+      --cinege-orange-glow: rgba(232, 93, 4, 0.25);
+      --cinege-bg: #F0F4F8;
+      --cinege-surface: #FFFFFF;
+      --cinege-text: #1A2332;
+      --cinege-muted: #5C6B7A;
+      --cinege-border: #E2E8F0;
+      --cinege-success: #059669;
+      --cinege-success-bg: #ECFDF5;
+      --cinege-info: #2563EB;
+      --cinege-info-bg: #EFF6FF;
+      --cinege-warning: #D97706;
+      --cinege-warning-bg: #FFFBEB;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --shadow-sm: 0 1px 3px rgba(26,35,50,.06);
+      --shadow-md: 0 4px 20px rgba(26,35,50,.08);
+      --shadow-lg: 0 12px 40px rgba(26,35,50,.12);
+      --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+      --sidebar-w: 280px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body { font-family: var(--font); background: var(--cinege-bg); color: var(--cinege-text); line-height: 1.65; font-size: 15px; }
+    .app-bar { position: sticky; top: 0; z-index: 100; background: var(--cinege-surface); border-bottom: 1px solid var(--cinege-border); box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 56px; }
+    .app-bar .brand { display: flex; align-items: center; gap: .6rem; font-weight: 800; font-size: 1.15rem; color: var(--cinege-orange); }
+    .app-bar .brand-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--cinege-orange), #F48C06); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1rem; }
+    .app-bar .doc-badge { font-size: .72rem; font-weight: 600; color: var(--cinege-muted); background: var(--cinege-bg); padding: .25rem .65rem; border-radius: 999px; }
+    .layout { display: flex; max-width: 1280px; margin: 0 auto; min-height: calc(100vh - 56px); }
+    .sidebar { width: var(--sidebar-w); flex-shrink: 0; padding: 1.5rem 1rem 2rem 1.5rem; position: sticky; top: 56px; align-self: flex-start; max-height: calc(100vh - 56px); overflow-y: auto; }
+    .sidebar h4 { font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; color: var(--cinege-muted); margin: 1rem 0 .5rem; }
+    .sidebar h4:first-child { margin-top: 0; }
+    .sidebar a { display: block; padding: .4rem .65rem; border-radius: var(--radius-sm); color: var(--cinege-muted); text-decoration: none; font-size: .88rem; transition: all .15s; }
+    .sidebar a:hover { background: var(--cinege-orange-light); color: var(--cinege-orange-dark); }
+    .main { flex: 1; padding: 1.5rem 2rem 3rem; min-width: 0; }
+    .hero { background: linear-gradient(135deg, var(--cinege-orange) 0%, #F48C06 50%, #FFBA08 100%); border-radius: var(--radius-xl); padding: 2.5rem 2rem; color: #fff; margin-bottom: 1.75rem; position: relative; overflow: hidden; }
+    .hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 90% 10%, rgba(255,255,255,.15) 0%, transparent 50%); }
+    .hero-inner { position: relative; }
+    .hero-eyebrow { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; opacity: .9; margin-bottom: .5rem; }
+    .hero h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; line-height: 1.2; margin-bottom: .6rem; }
+    .hero-lead { font-size: 1.05rem; opacity: .95; max-width: 760px; margin-bottom: 1.25rem; }
+    .hero-chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .chip { background: rgba(255,255,255,.2); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.3); padding: .3rem .75rem; border-radius: 999px; font-size: .78rem; font-weight: 600; }
+    .card { background: var(--cinege-surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--cinege-border); padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; }
+    .card-title { font-size: 1.2rem; font-weight: 700; color: var(--cinege-orange-dark); margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem; }
+    .step-block { background: var(--cinege-surface); border-radius: var(--radius-lg); border: 1px solid var(--cinege-border); box-shadow: var(--shadow-md); margin-bottom: 2rem; overflow: hidden; }
+    .step-header { display: flex; align-items: flex-start; gap: 1rem; padding: 1.25rem 1.5rem; background: linear-gradient(90deg, var(--cinege-orange-light) 0%, var(--cinege-surface) 60%); border-bottom: 1px solid var(--cinege-border); }
+    .step-number { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: var(--cinege-orange); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 14px var(--cinege-orange-glow); }
+    .step-number.success { background: var(--cinege-success); box-shadow: 0 4px 14px rgba(5,150,105,.3); }
+    .step-header-text h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: .35rem; }
+    .step-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .tag { font-size: .68rem; font-weight: 600; padding: .2rem .55rem; border-radius: 6px; }
+    .tag-action { background: #F5F3FF; color: #7C3AED; }
+    .tag-route { background: var(--cinege-info-bg); color: var(--cinege-info); }
+    .tag-time { background: #F1F5F9; color: #64748B; }
+    .step-body { padding: 1.25rem 1.5rem 1.5rem; }
+    .instruction { font-size: .95rem; margin-bottom: 1rem; }
+    .instruction strong { color: var(--cinege-orange-dark); }
+    .callout { display: flex; gap: .75rem; padding: .85rem 1rem; border-radius: var(--radius-md); margin: .85rem 0; font-size: .9rem; }
+    .callout-icon { flex-shrink: 0; font-size: 1.1rem; line-height: 1.4; }
+    .callout-tip { background: var(--cinege-info-bg); border: 1px solid rgba(37,99,235,.15); color: #1E40AF; }
+    .callout-warn { background: var(--cinege-warning-bg); border: 1px solid rgba(217,119,6,.2); color: #92400E; }
+    .callout-narr { background: var(--cinege-success-bg); border-left: 4px solid var(--cinege-success); font-style: italic; }
+    .figure { margin: 1rem 0; }
+    .figure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    .figure-frame { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--cinege-border); box-shadow: var(--shadow-lg); }
+    .figure-frame img { width: 100%; display: block; min-height: 120px; background: var(--cinege-bg); }
+    .figure-label { display: flex; justify-content: space-between; align-items: center; background: #1A2332; color: #94A3B8; padding: .45rem .75rem; font-size: .72rem; font-family: Consolas, monospace; }
+    .figure-label .phase { background: var(--cinege-orange); color: #fff; padding: .1rem .4rem; border-radius: 4px; font-size: .65rem; font-weight: 700; }
+    .figure-label .phase.before { background: #64748B; }
+    .ui-path { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; background: var(--cinege-bg); padding: .65rem 1rem; border-radius: var(--radius-sm); font-size: .85rem; margin: .75rem 0; }
+    .ui-path span { color: var(--cinege-muted); }
+    .ui-path .arrow { color: var(--cinege-orange); font-weight: 700; }
+    .ui-path .current { font-weight: 700; color: var(--cinege-orange-dark); }
+    .outcome-box { background: linear-gradient(135deg, var(--cinege-success-bg), #fff); border: 2px solid var(--cinege-success); border-radius: var(--radius-lg); padding: 1.5rem; margin-top: 1rem; }
+    .outcome-box h4 { color: var(--cinege-success); margin-bottom: .5rem; }
+    footer { text-align: center; padding: 2rem; color: var(--cinege-muted); font-size: .82rem; border-top: 1px solid var(--cinege-border); margin-top: 2rem; }
+    @media (max-width: 900px) { .layout { flex-direction: column; } .sidebar { width: 100%; position: static; max-height: none; } .main { padding: 1rem; } .figure-grid { grid-template-columns: 1fr; } }
+    @media print { .sidebar, .app-bar { display: none; } .step-block { break-inside: avoid; } }
+  </style>
+</head>
+<body>
+  <header class="app-bar">
+    <div class="brand">
+      <div class="brand-icon">🐦</div>
+      CINEGE
+    </div>
+    <span class="doc-badge">Felhasználói kézikönyv · notif_teszt</span>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Tartalomjegyzék">
+      <h4>Áttekintés</h4>
+      <a href="#attekintes">Bevezető</a>
+      <a href="#elokeszulet">Előkészület</a>
+      <h4>Lépések</h4>
+      <a href="#lepes-1">1. Saját kit megnyitása</a>
+      <a href="#lepes-2">2. Érdekeltségek áttekintése</a>
+      <a href="#lepes-3">3. Szabályok áttekintése</a>
+      <a href="#lepes-4">4. People admin megnyitása</a>
+      <a href="#lepes-5">5. Delivery napló megnyitása</a>
+      <a href="#lepes-6">6. Defaults sablon megnyitása</a>
+      <a href="#lepes-7">7. Tower felület megnyitása</a>
+      <a href="#lepes-8">8. Forrás nézet kiválasztása</a>
+      <a href="#lepes-9">9. Legutóbbi események listájának megnyitása</a>
+      <a href="#lepes-10">10. Piaci esemény kiválasztása</a>
+      <a href="#lepes-11">11. Forrásrészletek megtekintése</a>
+      <a href="#lepes-12">12. Breaking esemény megnyitása</a>
+      <a href="#lepes-13">13. Másik breaking eseményre váltás</a>
+      <a href="#lepes-14">14. Nem eldöntött esemény kiválasztása</a>
+      <a href="#lepes-15">15. Kézi döntésre váró esemény megnyitása</a>
+      <a href="#lepes-16">16. Döntés most indítása</a>
+      <a href="#lepes-17">17. Döntés utáni nyomvonal visszanézése</a>
+      <a href="#lepes-18">18. Új esemény kiválasztása</a>
+      <a href="#lepes-19">19. Címzett döntési kártya megnyitása</a>
+      <a href="#lepes-20">20. Indoklás részleteinek megnyitása</a>
+      <h4>Lezárás</h4>
+      <a href="#eredmeny">Várható eredmény</a>
+      <a href="#hibaelharitas">Hibaelhárítás</a>
+    </nav>
+
+    <main class="main">
+      <section class="hero" id="attekintes">
+        <div class="hero-inner">
+          <div class="hero-eyebrow">Notif · Admin · Tower</div>
+          <h1>Notif admin felületek és Tower döntési nyomvonal áttekintése</h1>
+          <p class="hero-lead">
+            Ez az útmutató végigvezet a Notif fontos admin felületein: a saját kit beállításain, a felhasználó- és kiküldéskezelésen,
+            majd részletesen bemutatja a Tower nézetet, ahol az események forrása, állapota, kézi döntése és a kiértesítési indoklás is visszanézhető.
+          </p>
+          <div class="hero-chips">
+            <span class="chip">⏱️ ~2 perc</span>
+            <span class="chip">📋 20 lépés</span>
+            <span class="chip">🎯 Középhaladó szint</span>
+            <span class="chip">🛰️ Admin + monitoring</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="card" id="elokeszulet">
+        <div class="card-title">📋 Miről szól ez az útmutató?</div>
+        <p style="color:var(--cinege-muted);margin-bottom:1rem">
+          A folyamat nem adatbevitelről, hanem <strong>admin és ellenőrző felületek megismeréséről</strong> szól. A bemutató alapján a
+          <strong>Saját kit</strong> oldalon a felhasználó saját csatornáit, e-mail címét és érdekeltségeit lehet áttekinteni;
+          a <strong>People</strong> oldalon a meghívások és felhasználók állapota látható; a <strong>Delivery</strong> oldalon a kiküldési napló;
+          a <strong>Defaults</strong> oldalon az új felhasználók alapértelmezett sablonja; végül a <strong>Tower</strong> nézetben az események forrása,
+          a döntési állapot és a részletes nyomvonal követhető végig.
+        </p>
+        <div class="ui-path">
+          <span>Saját kit</span><span class="arrow">→</span>
+          <span>People</span><span class="arrow">→</span>
+          <span>Delivery</span><span class="arrow">→</span>
+          <span>Defaults</span><span class="arrow">→</span>
+          <span class="current">Tower</span><span class="arrow">→</span>
+          <span>Események és nyomvonal</span>
+        </div>
+        <div class="callout callout-tip">
+          <span class="callout-icon">💡</span>
+          <div><strong>Fontos:</strong> a képernyőképek több helyen meglévő adatokat mutatnak. Ezeket csak akkor kezeld végrehajtott módosításként, ha a lépés ténylegesen kattintást vagy mentést tartalmaz.</div>
+        </div>
+      </div>
+
+      <article class="step-block" id="lepes-1">
+        <div class="step-header">
+          <div class="step-number">1</div>
+          <div class="step-header-text">
+            <h3>Saját kit megnyitása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Navigáció</span>
+              <span class="tag tag-route">/app/kit</span>
+              <span class="tag tag-time">~10 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Itt lehet áttekinteni, hogy a felhasználó milyen értesítési csatornákat kér.</div></div>
+          <p class="instruction">
+            Nyisd meg a <strong>Saját kit</strong> oldalt. Ez a felület a személyes értesítési beállítások központja:
+            itt látható, mely csatornák vannak bekapcsolva, és milyen címre vagy azonosítóra történik a kiküldés.
+          </p>
+          <div class="figure">
+            <div class="figure-frame">
+              <img src="screenshots/011370-00004-ui_action-after.png" alt="Saját kit oldal" loading="lazy" />
+              <div class="figure-label">Saját kit · Csatornák lépés</div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">👀</span><div>A bemutató alapján ezen a lapon nemcsak a csatornák, hanem az e-mail cím és később az érdekeltségek is áttekinthetők.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-2">
+        <div class="step-header">
+          <div class="step-number">2</div>
+          <div class="step-header-text">
+            <h3>Érdekeltségek áttekintése</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ 2 Érdekeltségek</span>
+              <span class="tag tag-route">/app/kit</span>
+              <span class="tag tag-time">~13 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Itt az e-mail cím mellett az is látható, milyen érdekeltségek alapján kap a felhasználó értesítést.</div></div>
+          <p class="instruction">
+            Kattints a <strong>2 Érdekeltségek</strong> fülre. Itt tematikus érdeklődési körök szerint állítható vagy ellenőrizhető,
+            hogy a rendszer milyen típusú eseményeknél tekint egy felhasználót releváns címzettnek.
+          </p>
+          <div class="figure">
+            <div class="figure-grid">
+              <div class="figure-frame">
+                <img src="screenshots/023037-00005-ui_action-before.png" alt="Csatornák nézet" loading="lazy" />
+                <div class="figure-label"><span class="phase before">ELŐTTE</span> Csatornák lépés</div>
+              </div>
+              <div class="figure-frame">
+                <img src="screenshots/024664-00007-ui_action-after.png" alt="Érdekeltségek nézet" loading="lazy" />
+                <div class="figure-label"><span class="phase">UTÁNA</span> Érdekeltségek kártyák</div>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">💡</span><div>Az érdekeltségek később a Tower nyomvonalában is visszaköszönnek: ott látszik, hogy egy esemény illeszkedik-e a felhasználó profiljához.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-3">
+        <div class="step-header">
+          <div class="step-number">3</div>
+          <div class="step-header-text">
+            <h3>Szabályok áttekintése</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ 3 Szabályok</span>
+              <span class="tag tag-route">/app/kit</span>
+              <span class="tag tag-time">~8 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <p class="instruction">
+            Kattints a <strong>3 Szabályok</strong> fülre. A megjelenő lapon a rendszer szabályszintek szerint mutatja,
+            hogy az egyes eseménytípusoknál milyen feltétel és milyen súlyossági szint számít fontosnak.
+          </p>
+          <div class="figure">
+            <div class="figure-grid">
+              <div class="figure-frame">
+                <img src="screenshots/030637-00008-ui_action-before.png" alt="Érdekeltségek előtte" loading="lazy" />
+                <div class="figure-label"><span class="phase before">ELŐTTE</span> Érdekeltségek</div>
+              </div>
+              <div class="figure-frame">
+                <img src="screenshots/032288-00010-ui_action-after.png" alt="Szabályok nézet" loading="lazy" />
+                <div class="figure-label"><span class="phase">UTÁNA</span> Magyar és angol szabályok</div>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-warn"><span class="callout-icon">⚠️</span><div>A képen látható értékek meglévő beállítások. A lépés csak a nézet megnyitását igazolja, nem a szabályok módosítását.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-4">
+        <div class="step-header">
+          <div class="step-number">4</div>
+          <div class="step-header-text">
+            <h3>People admin megnyitása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ People</span>
+              <span class="tag tag-route">/admin/people</span>
+              <span class="tag tag-time">~5 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Az admin nézetben a People terület a felhasználókkal kapcsolatos karbantartási feladatokhoz tartozik.</div></div>
+          <p class="instruction">
+            Kattints a felső menüben a <strong>People</strong> elemre. Ezen az oldalon látható az e-mail alapú meghívás,
+            a felhasználók szerepköre, státusza és az invitálás állapota.
+          </p>
+          <div class="figure">
+            <div class="figure-frame">
+              <img src="screenshots/037558-00013-ui_action-after.png" alt="People oldal" loading="lazy" />
+              <div class="figure-label">People · meghívás és user lista</div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">💡</span><div>A lista hasznos ellenőrzésre: gyorsan látszik, hogy egy felhasználó aktív, meghívott vagy még nem véglegesített státuszban van.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-5">
+        <div class="step-header">
+          <div class="step-number">5</div>
+          <div class="step-header-text">
+            <h3>Delivery napló megnyitása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Delivery</span>
+              <span class="tag tag-route">/admin/delivery</span>
+              <span class="tag tag-time">~12 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Ez a meghívások és kiküldések területe, ahol a felhasználókhoz kapcsolódó küldési állapotok ellenőrizhetők.</div></div>
+          <p class="instruction">
+            Nyisd meg a <strong>Delivery</strong> oldalt. Itt a kiküldési napló soronként mutatja a célcsatornát, a címzettet,
+            a státuszt és hiba esetén annak rövid okát is.
+          </p>
+          <div class="figure">
+            <div class="figure-frame">
+              <img src="screenshots/049451-00016-ui_action-after.png" alt="Delivery oldal" loading="lazy" />
+              <div class="figure-label">Delivery · küldési előzmények</div>
+            </div>
+          </div>
+          <div class="callout callout-warn"><span class="callout-icon">⚠️</span><div>Ha egy kiküldés hibás, itt gyakran azonnal látható a technikai ok is, például hiányzó token vagy nincs konfigurált csatorna.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-6">
+        <div class="step-header">
+          <div class="step-number">6</div>
+          <div class="step-header-text">
+            <h3>Defaults sablon megnyitása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Defaults</span>
+              <span class="tag tag-route">/admin/defaults</span>
+              <span class="tag tag-time">~4 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Itt található az a sablon, amely az új felhasználókhoz alapértelmezésként létrejön.</div></div>
+          <p class="instruction">
+            Kattints a <strong>Defaults</strong> menüpontra. Ez a felület az új felhasználók induló beállításait mutatja,
+            vagyis azt a mintát, amelyből a rendszer a kezdeti értesítési konfigurációt felépíti.
+          </p>
+          <div class="figure">
+            <div class="figure-frame">
+              <img src="screenshots/053033-00019-ui_action-after.png" alt="Defaults oldal" loading="lazy" />
+              <div class="figure-label">Defaults · alapértelmezett csatornák</div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">🧩</span><div>Ha több új felhasználónál ugyanazt a viselkedést várod, érdemes először ezt a sablont ellenőrizni, és csak utána a konkrét user beállításait.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-7">
+        <div class="step-header">
+          <div class="step-number">7</div>
+          <div class="step-header-text">
+            <h3>Tower felület megnyitása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Tower</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~6 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Itt érhető el a döntéshozó és a rendszer állapotának áttekintése.</div></div>
+          <p class="instruction">
+            Nyisd meg a <strong>Tower</strong> oldalt. Ez az operatív ellenőrző felület egyszerre mutatja a forrásokat,
+            a döntési mód állapotát és a legutóbbi események listáját.
+          </p>
+          <div class="figure">
+            <div class="figure-frame">
+              <img src="screenshots/058912-00024-ui_action-after.png" alt="Tower oldal" loading="lazy" />
+              <div class="figure-label">Tower · rendszer, események és nyomvonal</div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">💡</span><div>A Tower akkor hasznos igazán, ha meg akarod érteni, hogy egy esemény honnan jött, mi lett belőle, és miért kapott vagy nem kapott kiértesítést egy felhasználó.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-8">
+        <div class="step-header">
+          <div class="step-number">8</div>
+          <div class="step-header-text">
+            <h3>Forrás nézet kiválasztása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Forrás</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~10 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>A rendszerben a források is külön megtekinthetők.</div></div>
+          <p class="instruction">
+            A Tower oldalon kattints a <strong>Forrás</strong> nézetre. Ezzel az eseménylista és a kapcsolódó részletek úgy jelennek meg,
+            hogy jobban követhető legyen, melyik külső forrásból érkezett az adott tartalom.
+          </p>
+          <div class="figure">
+            <div class="figure-frame">
+              <img src="screenshots/069286-00026-ui_action-after.png" alt="Forrás nézet" loading="lazy" />
+              <div class="figure-label">Tower · Forrás nézet aktív</div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">🔎</span><div>Ez a nézet különösen akkor hasznos, ha azt vizsgálod, hogy egy adott adatforrás él-e, üres-e, vagy mikor adott utoljára sikeres találatot.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-9">
+        <div class="step-header">
+          <div class="step-number">9</div>
+          <div class="step-header-text">
+            <h3>Legutóbbi események listájának megnyitása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ 100 · Legutóbbi felvételek</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~2 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Az eseményeknél a lista megnyitásával előjönnek a legutóbbi felvételek.</div></div>
+          <p class="instruction">
+            Kattints a <strong>100 · Legutóbbi felvételek</strong> listára. Ez az a pont, ahonnan konkrét eseményeket választhatsz ki további vizsgálatra.
+          </p>
+          <div class="figure">
+            <div class="figure-frame">
+              <img src="screenshots/071552-00028-ui_action-after.png" alt="Legutóbbi felvételek" loading="lazy" />
+              <div class="figure-label">Eseménylista · legutóbbi 100 elem</div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">🗂️</span><div>Az eseménylista jó kiindulópont hibakereséshez, mert időrendben mutatja az újonnan beérkezett tartalmakat.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-10">
+        <div class="step-header">
+          <div class="step-number">10</div>
+          <div class="step-header-text">
+            <h3>Piaci esemény kiválasztása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Esemény kiválasztás</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~2 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Az eseményre kattintva megjelennek a kapcsolódó részletek.</div></div>
+          <p class="instruction">
+            Válaszd ki a listából a <strong>bitcoin</strong> piaci eseményt. A jobb oldali panel ekkor megmutatja az eredetet,
+            a normalizált címet és azt, hogy van-e már döntés az eseményhez.
+          </p>
+          <div class="figure">
+            <div class="figure-grid">
+              <div class="figure-frame">
+                <img src="screenshots/071729-00029-ui_action-before.png" alt="Esemény kiválasztás előtt" loading="lazy" />
+                <div class="figure-label"><span class="phase before">ELŐTTE</span> Részletek még üresek</div>
+              </div>
+              <div class="figure-frame">
+                <img src="screenshots/073323-00033-ui_action-after.png" alt="Bitcoin esemény kiválasztva" loading="lazy" />
+                <div class="figure-label"><span class="phase">UTÁNA</span> Bitcoin esemény részletei</div>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">📌</span><div>A jobb oldali panelből gyorsan eldönthető, hogy az esemény csak beérkezett, vagy már feldolgozási döntés is tartozik hozzá.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-11">
+        <div class="step-header">
+          <div class="step-number">11</div>
+          <div class="step-header-text">
+            <h3>Forrásrészletek megtekintése</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ CoinGecko simple price</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~7 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>A jobb oldalon ilyenkor láthatóvá válik a nyomvonal és az egyéb kapcsolódó adatok.</div></div>
+          <p class="instruction">
+            Kattints a <strong>CoinGecko simple price</strong> elemre a részletező panelben. Ezzel a kiválasztott eseményhez tartozó forrásinformáció
+            még pontosabban azonosítható, és a jobb oldali részletes nézetben jobban elkülönül az eredeti és a normalizált tartalom.
+          </p>
+          <div class="figure">
+            <div class="figure-frame">
+              <img src="screenshots/080016-00035-ui_action-after.png" alt="Forrásrészletek" loading="lazy" />
+              <div class="figure-label">Forrásrészletek · nyomvonal és adatok</div>
+            </div>
+          </div>
+          <div class="callout callout-warn"><span class="callout-icon">⚠️</span><div>Ha a jobb oldali panel üres vagy hiányos, először mindig ellenőrizd, hogy valóban eseményt választottál-e ki a bal oldali listából.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-12">
+        <div class="step-header">
+          <div class="step-number">12</div>
+          <div class="step-header-text">
+            <h3>Breaking esemény megnyitása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Breaking esemény</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~6 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>A nyomvonal és az egyéb adatok különböző eseményeknél is ugyanitt vizsgálhatók.</div></div>
+          <p class="instruction">
+            Válts át egy <strong>breaking</strong> típusú eseményre a listában. Ezzel ellenőrizheted, hogy a Tower nemcsak piaci,
+            hanem hírjellegű eseményeknél is ugyanazon a logikán mutatja az eredetet, az összefoglalást és a döntési állapotot.
+          </p>
+          <div class="figure">
+            <div class="figure-grid">
+              <div class="figure-frame">
+                <img src="screenshots/084089-00036-ui_action-before.png" alt="Eseményváltás előtt" loading="lazy" />
+                <div class="figure-label"><span class="phase before">ELŐTTE</span> Korábbi kiválasztott esemény</div>
+              </div>
+              <div class="figure-frame">
+                <img src="screenshots/085640-00040-ui_action-after.png" alt="Breaking esemény részletei" loading="lazy" />
+                <div class="figure-label"><span class="phase">UTÁNA</span> Breaking esemény részletei</div>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">📰</span><div>A breaking híreknél különösen fontos a normalizált cím és kivonat, mert ebből dől el később, hogy a rendszer relevánsnak minősíti-e a tartalmat.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-13">
+        <div class="step-header">
+          <div class="step-number">13</div>
+          <div class="step-header-text">
+            <h3>Másik breaking eseményre váltás</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Eseményváltás</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~2 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Ugyanitt látszanak a nyomvonalhoz tartozó további adatok is.</div></div>
+          <p class="instruction">
+            Kattints egy másik <strong>breaking</strong> eseményre. A cél itt az, hogy lásd: a részletező panel dinamikusan frissül,
+            és minden egyes eseményhez külön nyomvonalat és indoklási képet ad.
+          </p>
+          <div class="figure">
+            <div class="figure-grid">
+              <div class="figure-frame">
+                <img src="screenshots/085786-00043-ui_action-before.png" alt="Másik esemény előtt" loading="lazy" />
+                <div class="figure-label"><span class="phase before">ELŐTTE</span> Előző breaking esemény</div>
+              </div>
+              <div class="figure-frame">
+                <img src="screenshots/087368-00047-ui_action-after.png" alt="Másik breaking esemény" loading="lazy" />
+                <div class="figure-label"><span class="phase">UTÁNA</span> Új breaking esemény részletei</div>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">🔁</span><div>Az események közti gyors váltás jó módszer annak ellenőrzésére, hogy a panel nem korábbi adatokkal maradt-e a képernyőn.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-14">
+        <div class="step-header">
+          <div class="step-number">14</div>
+          <div class="step-header-text">
+            <h3>Nem eldöntött esemény kiválasztása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Új esemény</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~2 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Itt már egy olyan esemény látható, amelyhez még nem született döntés.</div></div>
+          <p class="instruction">
+            Válassz ki egy további eseményt a listából, amelyet a rendszer még nem döntött el. A jobb oldali panel alapján az ilyen eseményeknél
+            még nincs lezárt döntési nyomvonal, ezért szükség lehet manuális beavatkozásra.
+          </p>
+          <div class="figure">
+            <div class="figure-grid">
+              <div class="figure-frame">
+                <img src="screenshots/087544-00048-ui_action-before.png" alt="Kiválasztás előtt" loading="lazy" />
+                <div class="figure-label"><span class="phase before">ELŐTTE</span> Előző esemény</div>
+              </div>
+              <div class="figure-frame">
+                <img src="screenshots/089128-00050-ui_action-after.png" alt="Nem eldöntött esemény" loading="lazy" />
+                <div class="figure-label"><span class="phase">UTÁNA</span> Döntésre váró esemény</div>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-warn"><span class="callout-icon">⚠️</span><div>Az, hogy egy esemény nyitott vagy még nem eldöntött, nem hiba önmagában — inkább jelzés arra, hogy ellenőrzést vagy kézi döntést igényelhet.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-15">
+        <div class="step-header">
+          <div class="step-number">15</div>
+          <div class="step-header-text">
+            <h3>Kézi döntésre váró esemény megnyitása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Esemény kiválasztás</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~7 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>A bemutató itt egy még nem eldöntött eseményt nyit meg, amelyen kézi döntés hozható.</div></div>
+          <p class="instruction">
+            Kattints arra az eseményre, amelyen kézi döntést szeretnél kezdeményezni. A részletező panelben ilyenkor megjelenik a
+            <strong>Döntés most</strong> gomb, ami azt jelzi, hogy az eseményen manuális döntési művelet indítható.
+          </p>
+          <div class="figure">
+            <div class="figure-grid">
+              <div class="figure-frame">
+                <img src="screenshots/089311-00051-ui_action-before.png" alt="Döntés előtti nézet" loading="lazy" />
+                <div class="figure-label"><span class="phase before">ELŐTTE</span> Eseménylista</div>
+              </div>
+              <div class="figure-frame">
+                <img src="screenshots/090891-00055-ui_action-after.png" alt="Kézi döntésre váró esemény" loading="lazy" />
+                <div class="figure-label"><span class="phase">UTÁNA</span> Döntés most gomb látható</div>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">🖐️</span><div>A kézi döntés tipikusan akkor kell, amikor automatika alapján még nincs végleges eredmény, de üzletileg már szükséges a minősítés.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-16">
+        <div class="step-header">
+          <div class="step-number">16</div>
+          <div class="step-header-text">
+            <h3>Döntés most indítása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Döntés most</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~8 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Itt egy még nem eldöntött eseményre kézzel történik döntéshozás.</div></div>
+          <p class="instruction">
+            Kattints a <strong>Döntés most</strong> gombra. Ezzel az eseményre manuális döntési folyamat indul, és a rendszer létrehozza
+            vagy frissíti a döntési nyomvonalat.
+          </p>
+          <div class="figure">
+            <div class="figure-grid">
+              <div class="figure-frame">
+                <img src="screenshots/095906-00056-ui_action-before.png" alt="Döntés most előtt" loading="lazy" />
+                <div class="figure-label"><span class="phase before">ELŐTTE</span> Kézi döntés indítható</div>
+              </div>
+              <div class="figure-frame">
+                <img src="screenshots/097582-00059-ui_action-after.png" alt="Döntés most után" loading="lazy" />
+                <div class="figure-label"><span class="phase">UTÁNA</span> Döntési állapot frissítve</div>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-warn"><span class="callout-icon">⚠️</span><div>Kézi döntésnél mindig ellenőrizd az esemény címét, forrását és összefoglalását, mert ez alapján kerülhet később kiküldés vagy elutasítás a címzettek felé.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-17">
+        <div class="step-header">
+          <div class="step-number">17</div>
+          <div class="step-header-text">
+            <h3>Döntés utáni nyomvonal visszanézése</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Esemény újranyitása</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~2 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>A döntés után itt már jól látható a döntéshozási eredmény és a kapcsolódó nyomvonal.</div></div>
+          <p class="instruction">
+            Nyisd meg ismét ugyanazt az eseményt. A cél annak ellenőrzése, hogy a döntés után a jobb oldali panel már ténylegesen tartalmazza
+            a döntési eredményhez kapcsolódó címzettinformációkat és indoklásokat.
+          </p>
+          <div class="figure">
+            <div class="figure-grid">
+              <div class="figure-frame">
+                <img src="screenshots/103603-00060-ui_action-before.png" alt="Döntés utáni visszanyitás előtt" loading="lazy" />
+                <div class="figure-label"><span class="phase before">ELŐTTE</span> Lista döntés után</div>
+              </div>
+              <div class="figure-frame">
+                <img src="screenshots/105184-00064-ui_action-after.png" alt="Döntés utáni nyomvonal" loading="lazy" />
+                <div class="figure-label"><span class="phase">UTÁNA</span> Nyomvonal és címzettek láthatók</div>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">✅</span><div>Ez a nézet különösen hasznos auditálásnál: utólag visszaellenőrizhető, hogy a rendszer hogyan jutott el a kiküldési vagy nem kiküldési döntéshez.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-18">
+        <div class="step-header">
+          <div class="step-number">18</div>
+          <div class="step-header-text">
+            <h3>Új esemény kiválasztása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Másik esemény</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~2 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Ezután egy másik esemény nyomvonalára váltunk, hogy látható legyen, kinél miért ment vagy nem ment ki értesítés.</div></div>
+          <p class="instruction">
+            Válassz ki egy másik eseményt a listából. Ezzel összehasonlíthatod két különböző esemény döntési kimenetét,
+            és láthatod, hogy a címzetti megfelelés eseményenként változhat.
+          </p>
+          <div class="figure">
+            <div class="figure-grid">
+              <div class="figure-frame">
+                <img src="screenshots/105360-00065-ui_action-before.png" alt="Másik esemény kiválasztása előtt" loading="lazy" />
+                <div class="figure-label"><span class="phase before">ELŐTTE</span> Előző nyomvonal</div>
+              </div>
+              <div class="figure-frame">
+                <img src="screenshots/106911-00069-ui_action-after.png" alt="Új esemény kiválasztva" loading="lazy" />
+                <div class="figure-label"><span class="phase">UTÁNA</span> Új esemény részletei</div>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-tip"><span class="callout-icon">📊</span><div>Az összehasonlítás segít megérteni, hogy a rendszer nem általánosan, hanem mindig az adott esemény tartalma alapján dönt a relevanciáról.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-19">
+        <div class="step-header">
+          <div class="step-number">19</div>
+          <div class="step-header-text">
+            <h3>Címzett döntési kártya megnyitása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Címzett kártya</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~3 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>A komment vagy kiértesítési kártyában már az is visszanézhető, hogy miért ment ki egy adott értesítés.</div></div>
+          <p class="instruction">
+            A jobb oldali nyomvonal panelen kattints egy címzetthez tartozó döntési kártyára. A kiválasztott kártya részletesebben megmutatja,
+            hogy az adott felhasználónál milyen csatorna, prioritás és rövid magyarázat tartozik a döntéshez.
+          </p>
+          <div class="figure">
+            <div class="figure-frame">
+              <img src="screenshots/110221-00071-ui_action-after.png" alt="Címzett döntési kártya" loading="lazy" />
+              <div class="figure-label">Nyomvonal · címzettkártya megnyitva</div>
+            </div>
+          </div>
+          <div class="callout callout-warn"><span class="callout-icon">⚠️</span><div>Ha egy címzettnél „NO” eredmény látszik, az nem feltétlen hiba: gyakran egyszerűen azt jelzi, hogy az esemény nem illeszkedett az érdekeltségéhez vagy a státusza nem megfelelő.</div></div>
+        </div>
+      </article>
+
+      <article class="step-block" id="lepes-20">
+        <div class="step-header">
+          <div class="step-number success">✓</div>
+          <div class="step-header-text">
+            <h3>Indoklás részleteinek megnyitása</h3>
+            <div class="step-tags">
+              <span class="tag tag-action">🖱️ Indoklás megnyitása</span>
+              <span class="tag tag-route">/admin/tower</span>
+              <span class="tag tag-time">~2 mp</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="callout callout-narr"><span class="callout-icon">🎙️</span><div>Itt már konkrétan olvasható, hogy egy értesítés milyen indokkal ment ki az adott felhasználónak.</div></div>
+          <p class="instruction">
+            Nyisd meg a kiválasztott címzett részletes indoklását. A panelben ilyenkor szövegesen is megjelenik,
+            hogy a rendszer mi alapján minősítette az eseményt relevánsnak vagy éppen miért nem küldött értesítést.
+          </p>
+          <div class="figure">
+            <div class="figure-frame">
+              <img src="screenshots/111764-00073-ui_action-after.png" alt="Indoklás részletei" loading="lazy" />
+              <div class="figure-label">Nyomvonal · szöveges indoklás látható</div>
+            </div>
+          </div>
+
+          <div class="outcome-box" id="eredmeny">
+            <h4>✅ Várható eredmény</h4>
+            <p>
+              A folyamat végére át tudod tekinteni a Notif fő admin felületeit, és a Tower oldalon vissza tudod követni egy esemény teljes útját:
+              <strong>forrás → esemény → döntés → címzett → indoklás</strong>.
+              A bemutató alapján azt is ellenőrizni tudod, hogy egy értesítés miért ment ki, illetve miért nem ment ki egy adott felhasználónak.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <div class="card" id="hibaelharitas">
+        <div class="card-title">🔧 Gyakori kérdések</div>
+
+        <div class="callout callout-warn" style="margin-top:.5rem">
+          <span class="callout-icon">❓</span>
+          <div><strong>Miért üres a jobb oldali nyomvonal panel?</strong> — Általában azért, mert még nincs kiválasztva konkrét esemény a bal oldali listából, vagy olyan nézetben vagy, ahol a részletek még nem töltődtek be.</div>
+        </div>
+
+        <div class="callout callout-tip">
+          <span class="callout-icon">❓</span>
+          <div><strong>Mit jelent, ha egy címzettnél „NO” látszik?</strong> — Ez rendszerint azt jelenti, hogy az esemény nem illeszkedett az érdekeltségéhez, a csatornájához vagy a felhasználó állapota nem tette lehetővé a kiküldést.</div>
+        </div>
+
+        <div class="callout callout-warn">
+          <span class="callout-icon">❓</span>
+          <div><strong>Mikor érdemes a „Döntés most” gombot használni?</strong> — Akkor, ha az eseményhez még nincs kész döntés, de operatív okból azonnal szükséges manuális minősítést adni.</div>
+        </div>
+
+        <div class="callout callout-tip">
+          <span class="callout-icon">❓</span>
+          <div><strong>Hol ellenőrzöm az új felhasználók induló beállításait?</strong> — A <strong>Defaults</strong> oldalon, mert ez mutatja azt a sablont, amelyet az új felhasználók alapértelmezésként kapnak.</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>CINEGE · 20260916-194403_notif-teszt_matyas-ifj-kesmarki · 2026-09-16T17:44:03.682Z</footer>
+</body>
+</html>

@@ -49,7 +49,7 @@ Pass: egy szándékos Slack-hibánál az admin azt mondja „kézbesítés / Sla
 | Élő írás | Admin átírja a kitet / rules.hu / rules.en; a következő döntés ez |
 | Inaktiválás | Nem megy új megbízás; a deliveryben lévő kimegy |
 | Ki változtatott | User vs. admin, időpont |
-| Native / AI váltó | Rendszer-setting; a következő döntés ezt az agyat használja |
+| Native / AI váltó | Rendszer-setting; a következő döntés **magyarázata** ezt használja. FIRE mindig a matcheré. |
 
 Az admin **ír** a kitre és a váltóra. Nincs hírszintű stop.
 

@@ -2,6 +2,8 @@
 
 A lenti kérdések **lezárva** vannak, hacsak külön nem jelöljük. A többi doksi ehhez igazodik.
 
+A modell kimenetének bírálata (prompt verdict, elutasított shortcut): [12-ai-review.md](12-ai-review.md). Ez a lap a **termékdöntés**.
+
 ---
 
 ## Döntési log
@@ -12,7 +14,7 @@ A lenti kérdések **lezárva** vannak, hacsak külön nem jelöljük. A többi 
 | 2 | Élőben frissíthetők adminról | 2026-09-16 | S1c |
 | 3 | Meghívásos felvétel; a meghívott a sajátját is írja | 2026-09-16 | S1a |
 | 4 | Minden funkció MCP-n hívható | 2026-09-16 | D11 |
-| 5 | Nincs árnyéküzemmód. Native **vagy** AI, **váltósetting** | 2026-09-16 | D10, S11 |
+| 5 | Nincs árnyéküzemmód. Native **vagy** AI **magyarázat**, **váltósetting**. FIRE a matcheré. | 2026-09-16 | D10, S11 |
 | 6 | Érdekeltség + preferencia = bővíthető **JSON kit**. Új usernél **default másolat**, utána szerkesztés | 2026-09-16 | D1, kit |
 | 7 | Kivitelezés: **kézbesítő → UI → gyűjtő → döntés** | 2026-09-16 | 04-es terv |
 | 3b | V1 eseménycsalád: **mindhárom** (breaking, piac, katasztrófa) | 2026-09-16 | D0, D2 |
@@ -21,6 +23,7 @@ A lenti kérdések **lezárva** vannak, hacsak külön nem jelöljük. A többi 
 | 6b | Gyűjtés: **15 perces cron**, folyamatos | 2026-09-16 | D2, időrúd |
 | 21 | Ami már a deliveryben van, **menjen ki** | 2026-09-16 | S1c, D4/D5 |
 | 22 | MCP = **admin jogú gépfelhasználó** | 2026-09-16 | D11 |
+| 23 | Az AI **nem** dönt FIRE/NO-t; csak `{reason}`. Kulcs nélkül fail-closed. AI-felülírás később. | 2026-09-16 | D10, S11 |
 | 7b | Csatornapolicy: a **user bármit** csinálhat | 2026-09-16 | D6 |
 | 8 | Nincs napi összefoglaló | 2026-09-16 | D6 |
 | 9 | Dedup: ugyanaz a történést, userenként egyszer (javaslat elfogadva) | 2026-09-16 | D9 |
@@ -48,6 +51,7 @@ Még nyitott, nem blokkol: user és admin **egyszerre** írja ugyanazt a kitmez�
 | 6 | 15 perc cron a scrapingre. |
 | 21 | Deliverybe került megbízás kimegy. |
 | 22 | MCP: admin jogú gépuser. |
+| 23 | FIRE a matcheré; AI csak magyarázat; kulcs nélkül fail-closed. |
 | 7 | User bármilyen csatornakombinációt beállíthat, kritikusan is. |
 | 8 | Nincs napi digest. |
 | 9 | Ugyanaz a történést + szűk időablak; fejlemény külön; userenként egyszer. |
@@ -65,6 +69,7 @@ Még nyitott, nem blokkol: user és admin **egyszerre** írja ugyanazt a kitmez�
 ## Amit ebből szándékosan **nem** csinálunk
 
 - Árnyéküzemmód.
+- AI-FIRE-felülírás (a modell nem dönt kimenetelt).
 - Napi összefoglaló.
 - Hírenkénti admin-kontroll.
 - Időzóna-motor.

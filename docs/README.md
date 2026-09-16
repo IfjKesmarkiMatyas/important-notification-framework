@@ -12,21 +12,24 @@ A kód **megvan**. Indítás, station, teszt: a gyökér [README.md](../README.m
 | 1 kézbesítő | email + Slack chatbot | `delivery` modul, Mailpit / Slack adapter |
 | 2 UI + userek | meghívás, kit, admin | Angular 20 Notif Ink |
 | 3 gyűjtő | 15 p cron, Telex/BBC/USGS/CoinGecko/Frankfurter | `scrape` modul |
-| 4 döntés | native **vagy** AI, váltó | native F₁ = 1.00 a 65 mintán; AI csak `{reason}`; D9 később |
+| 4 döntés | matcher FIRE; magyarázat native **vagy** AI | native F₁ = 1.00 a 65 mintán; AI csak `{reason}`; D9 később |
 
 Tesztállomány userekkel és scrapelt eseményekkel: [station/](../station/). Golden: [11-decision-fixtures/](11-decision-fixtures/).
+
+**Kézikönyv (Cinege):** [Notif admin felületek és Tower döntési nyomvonal](Notif-admin-feluletek-es-Tower-dontesi-nyomvonal-attekintese/KEZIKONYV.hu.html) — 20 lépés, képernyőképekkel.
 
 ## Lezárt üzleti döntések (2026-09-16)
 
 - Több user, JSON **kit** (érdekeltség + preferencia + `rules.hu` / `rules.en`); új usernél **default másolat**.
 - Meghívásos felvétel; admin élőben ír; ami a deliveryben van, **kimegy**.
-- Native **vagy** AI, **váltósetting** — **nincs árnyéküzemmód**. FIRE mindig a determinisztikus matcher; az AI nem írja felül.
+- Magyarázat **native vagy AI**, **váltósetting** — **nincs árnyéküzemmód**. FIRE mindig a determinisztikus matcher; az AI nem írja felül.
 - Kivitelezés: **kézbesítő → UI → gyűjtő → döntés** (ez lefutott).
 - Mindhárom eseménycsalád; zárt típusok; Slack **chatbot**; 15 perc cron; user bármit beállíthat a csatornára; nincs digest.
 - MCP = **admin jogú gépfelhasználó**.
 - Források: Telex kötelező + USGS + CoinGecko — [09-v1-sources-and-branding.md](09-v1-sources-and-branding.md).
 
-Részletek: [07-questions-and-recommendations.md](07-questions-and-recommendations.md).
+Részletek: [07-questions-and-recommendations.md](07-questions-and-recommendations.md).  
+AI-irányítás (verdict + review): [12-ai-review.md](12-ai-review.md).
 
 ## Hogyan olvasd
 
@@ -43,6 +46,8 @@ Részletek: [07-questions-and-recommendations.md](07-questions-and-recommendatio
 | 9 | [09-v1-sources-and-branding.md](09-v1-sources-and-branding.md) | Telex, USGS, CoinGecko, feladó |
 | 10 | [10-delivery-ui-users/](10-delivery-ui-users/) | Fázis 1–2: delivery, meghívás emailben, Angular UI |
 | 11 | [11-decision-fixtures/](11-decision-fixtures/) | Gyűjtött korpusz → döntés-létra, golden truth, pontossági napló |
+| 12 | [12-ai-review.md](12-ai-review.md) | Prompt verdict + AI review log (mit utasítottunk el) |
+| — | [Kézikönyv (Cinege)](Notif-admin-feluletek-es-Tower-dontesi-nyomvonal-attekintese/KEZIKONYV.hu.html) | Admin UI + Tower nyomvonal, 20 lépés |
 | — | [transcript-user-prompts.md](transcript-user-prompts.md) | Csak a user promptok, időrendben |
 | — | [transcript.md](transcript.md) | Teljes Cursor export (válaszokkal) |
 
@@ -54,7 +59,7 @@ Kivitelezés: **kézbesítő → UI → gyűjtő → döntés**. MCP: **admin jo
 Három motor + irányítópult + gép-kapu:
 
 1. **Gyűjtőmotor** — információt szed le változó forrásokból, közös alakra hozza.
-2. **Döntésmotor** — mi fontos, kinek, milyen csatornán; **native vagy AI**, váltóval (nem egyszerre). FIRE = matcher; AI = magyarázat.
+2. **Döntésmotor** — mi fontos, kinek, milyen csatornán. FIRE = matcher; magyarázat **native vagy AI**, váltóval (nem egyszerre).
 3. **Kézbesítőmotor** — email + Slack chatbot.
 4. **Admin felület** — motorok, nyomvonal (system / inbox / story), userek, JSON kit, váltó.
 5. **MCP** — admin jogú gépfelhasználó.

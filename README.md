@@ -1,10 +1,12 @@
 # Notification Framework
 
-Meghívásos, többfelhasználós riasztórendszer. A gyűjtő normalizált eseményt készít (Telex, BBC, USGS, CoinGecko, Frankfurter), a döntésmotor **usereként** eldönti, hogy FIRE vagy NO, a kézbesítő emailen és Slack chatboton viszi ki. Native **vagy** AI, egy váltó — nincs árnyék. Az AI nem írja felül a FIRE-t: a matcher dönt, a modell csak `{reason}`-t ír. MCP = admin jogú gépuser.
+Meghívásos, többfelhasználós riasztórendszer. A gyűjtő normalizált eseményt készít (Telex, BBC, USGS, CoinGecko, Frankfurter), a döntésmotor **usereként** eldönti, hogy FIRE vagy NO, a kézbesítő emailen és Slack chatboton viszi ki. FIRE a matcheré; magyarázat **native vagy AI**, egy váltó — nincs árnyék. A modell csak `{reason}`-t ír. MCP = admin jogú gépuser.
 
 **Állapot (2026-09-16):** Fázis 1–4 bent van (kézbesítő, Angular UI, gyűjtő, native döntés F₁ = 1.00 a 65 mintán). Szándékosan később: D9 világesemény-összevonás, AI FIRE-felülírás, árnyék, Pushover éles.
 
-Üzleti szerződés: [docs/README.md](docs/README.md). Tesztállomány: [station/](station/).
+Üzleti szerződés: [docs/README.md](docs/README.md). Tesztállomány: [station/](station/). Prompt verdict + AI review: [docs/12-ai-review.md](docs/12-ai-review.md).
+
+**Kézikönyv (Cinege):** [Notif admin felületek és Tower döntési nyomvonal](docs/Notif-admin-feluletek-es-Tower-dontesi-nyomvonal-attekintese/KEZIKONYV.hu.html) — 20 lépéses UI-útmutató (kit, People, Delivery, Defaults, Tower). Nyisd meg a HTML-t a böngészőben.
 
 ## Stack
 

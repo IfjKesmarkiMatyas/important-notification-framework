@@ -11,11 +11,11 @@ Ez üzleti szótár, nem technikai séma.
 | **Admin** | Meghív, élőben írja bármely user beállításait, látja a motorokat és a nyomvonalat. |
 | **Meghívás** | Az egyetlen mód, ahogy user bekerül. Nincs nyilvános regisztráció. |
 | **JSON kit** | A user érdekeltsége + preferenciája egy bővíthető JSON-ban. Új usernél a default **másolódik**. |
-| **Szabályfile** | Native döntéshez userenként `rules.hu.json` és `rules.en.json` (szintén default másolat). |
+| **Szabályfile** | Native magyarázathoz / szinthez userenként `rules.hu.json` és `rules.en.json` (szintén default másolat). |
 | **Érdekeltség** | *Mire* figyeljen (zárt típus: breaking / piac / katasztrófa + szűrők). |
 | **Preferencia** | *Hogyan* értesüljön (email, Slack chatbot, tetszőleges kombináció). |
 | **Élő frissítés** | A következő döntés az új kitet használja. Ami már deliveryben van, kimegy. |
-| **Váltó** | Rendszer-setting: a döntésmotor **native** *vagy* **AI**. Nincs árnyék. |
+| **Váltó** | Rendszer-setting: a **magyarázat** native *vagy* AI. FIRE mindig a matcheré. Nincs árnyék. |
 | **MCP-elérés** | Admin jogú gépfelhasználó hívja ugyanazokat a funkciókat. |
 | **Csatorna** | Az értesítés *hová* megy: email, Slack, később bármi más. A csatorna cserélhető képesség, nem a termék magja. |
 | **Forrás** | Honnan jön az információ: híroldal, piaci feed, katasztrófa-közlemény, API, HTML oldal, stb. |
@@ -47,7 +47,7 @@ Ez üzleti szótár, nem technikai séma.
 | Fogalom | Üzleti felelősség | Nem felelőssége |
 |---|---|---|
 | **Gyűjtőmotor** | Forrásból információt hozni, eredetet megőrizni, **normalizált eseményt** adni. | Eldönteni, hogy fontos-e. Kiküldeni. |
-| **Döntésmotor** | Fontosság, címzett, csatorna, magyarázat. Futhat **szabályként** és **AI-ként** is. | Magát a weblapot olvasni. A Slack/email API-t hívni. |
+| **Döntésmotor** | Fontosság, címzett, csatorna, magyarázat. FIRE a matcheré; a magyarázat native sablon **vagy** AI, váltóval. | Magát a weblapot olvasni. A Slack/email API-t hívni. A FIRE felülírása modellel. |
 | **Kézbesítőmotor** | Megbízást csatornára vinni, státuszt visszajelezni (elküldve / sikertelen / késleltetve). | Újradönteni a fontosságot. |
 
 A motorok **szerződéses határa** a tesztelhetőség feltétele: egy motor hibája ne tegye értelmezhetetlenné a másikat.
@@ -58,9 +58,10 @@ Minden motor- és felületfunkció **MCP-n** is a fenti határokat tartja: az MC
 
 | Fogalom | Jelentés |
 |---|---|
-| **Szabályalapú (native) döntés** | A user `rules.hu` / `rules.en` file-ja. |
-| **AI döntés** | Modell a normalizált esemény + kit alapján. Csak ha a váltó `ai`. |
-| **Váltó** | Egy időben egy agy. Árnyék **nincs**. Hírszintű felülbírálat **nincs**. |
+| **Szabályalapú (native) magyarázat** | FIRE után a szint + sablon-indok a user `rules.hu` / `rules.en` file-jából. |
+| **AI magyarázat** | Ugyanaz a FIRE/NO; a `{reason}` a modellé. Csak ha a váltó `ai`. A modell **nem** dönt kimenetelt. |
+| **Matcher** | Kit küszöb / téma / állapot → FIRE vagy NO. Mindkét váltóálláson ez a kapu. |
+| **Váltó** | Egy időben egy magyarázat-mód. Árnyék **nincs**. Hírszintű felülbírálat **nincs**. |
 
 ## Admin
 
