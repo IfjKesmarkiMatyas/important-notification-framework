@@ -1,0 +1,73 @@
+[
+  {
+    "id": "11111111-1111-1111-1111-111111111111",
+    "family": "disaster",
+    "sourceId": "usgs",
+    "externalId": "us7000test64",
+    "occurredAt": "2026-09-16T12:00:00Z",
+    "ingestedAt": "2026-09-16T12:01:00Z",
+    "locale": "en",
+    "headline": "6.4 — near Tokyo, Japan",
+    "summary": "near Tokyo, Japan",
+    "canonicalUrl": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000test64",
+    "payload": {
+      "kind": "earthquake",
+      "magnitude": 6.4,
+      "place": "near Tokyo, Japan",
+      "lat": 35.68,
+      "lon": 139.69
+    }
+  },
+  {
+    "id": "22222222-2222-2222-2222-222222222222",
+    "family": "disaster",
+    "sourceId": "usgs",
+    "externalId": "us7000test41",
+    "occurredAt": "2026-09-16T12:01:40Z",
+    "ingestedAt": "2026-09-16T12:02:00Z",
+    "locale": "en",
+    "headline": "4.1 — 12 km S of Reno, Nevada",
+    "summary": "12 km S of Reno, Nevada",
+    "canonicalUrl": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000test41",
+    "payload": {
+      "kind": "earthquake",
+      "magnitude": 4.1,
+      "place": "12 km S of Reno, Nevada",
+      "lat": 39.41,
+      "lon": -119.81
+    }
+  },
+  {
+    "id": "33333333-3333-3333-3333-333333333333",
+    "family": "market",
+    "sourceId": "coingecko",
+    "externalId": "bitcoin@2026-09-16T12:00:00Z",
+    "occurredAt": "2026-09-16T12:00:00Z",
+    "ingestedAt": "2026-09-16T12:00:00Z",
+    "locale": "en",
+    "headline": "bitcoin 108000.0",
+    "summary": "CoinGecko simple price",
+    "canonicalUrl": "https://www.coingecko.com/",
+    "payload": {
+      "instrument": "bitcoin",
+      "priceUsd": 108000.0,
+      "previousUsd": 100000.0,
+      "movePercent": 8.0
+    }
+  },
+  {
+    "id": "44444444-4444-4444-4444-444444444444",
+    "family": "breaking",
+    "sourceId": "telex",
+    "externalId": "https://telex.hu/belfold/2026/09/16/foldrenges",
+    "occurredAt": "2026-09-16T12:00:00Z",
+    "ingestedAt": "2026-09-16T12:01:00Z",
+    "locale": "hu",
+    "headline": "Földrengés Japán partjainál",
+    "summary": "Rövid kivonat a hírről.",
+    "canonicalUrl": "https://telex.hu/belfold/2026/09/16/foldrenges",
+    "payload": {
+      "topics": ["belfold"]
+    }
+  }
+]

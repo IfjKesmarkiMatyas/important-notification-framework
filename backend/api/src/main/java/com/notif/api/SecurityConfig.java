@@ -44,8 +44,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/me/**").authenticated()
                         .anyRequest().denyAll()
                 )
-                .addFilterBefore(mcpTokenFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(mcpTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

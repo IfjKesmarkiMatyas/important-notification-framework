@@ -8,6 +8,9 @@ import {
   KitDocument,
   KitView,
   SessionUser,
+  ScrapeEventDetail,
+  ScrapeEventView,
+  ScrapeSourceView,
   UserView
 } from './models';
 
@@ -96,5 +99,39 @@ export class ApiService {
     rulesEn: Record<string, unknown>
   ): Observable<DefaultsView> {
     return this.http.put<DefaultsView>('/api/admin/defaults', { kit, rulesHu, rulesEn });
+  }
+
+  scrapeSources(): Observable<ScrapeSourceView[]> {
+    return this.http.get<ScrapeSourceView[]>('/api/admin/scrape/sources');
+  }
+
+  runScrape(sourceId: string): Observable<unknown> {
+    return this.http.post('/api/admin/scrape/runs', { sourceId });
+  }
+
+  scrapeEvents(family?: string, sourceId?: string): Observable<ScrapeEventView[]> {
+    const params: Record<string, string> = {};
+    if (family && family !== 'all') {
+      params['family'] = family;
+    }
+    if (sourceId && sourceId !== 'all') {
+      params['sourceId'] = sourceId;
+    }
+    return this.http.get<ScrapeEventView[]>('/api/admin/scrape/events', { params });
+  }
+
+  scrapeEvent(id: string): Observable<ScrapeEventDetail> {
+    return this.http.get<ScrapeEventDetail>(`/api/admin/scrape/events/${id}`);
+  }
+
+  exportScrapeEvents(family?: string, sourceId?: string): Observable<Record<string, unknown>[]> {
+    const params: Record<string, string> = {};
+    if (family && family !== 'all') {
+      params['family'] = family;
+    }
+    if (sourceId && sourceId !== 'all') {
+      params['sourceId'] = sourceId;
+    }
+    return this.http.get<Record<string, unknown>[]>('/api/admin/scrape/events/export', { params });
   }
 }

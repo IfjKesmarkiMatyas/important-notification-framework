@@ -11,11 +11,13 @@ import com.notif.identity.TestDeliveryService;
 import com.notif.identity.UserRole;
 import com.notif.identity.UserService;
 import com.notif.identity.UserStatus;
+import com.notif.scrape.ScrapeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.time.Instant;
 import java.util.List;
@@ -40,6 +42,12 @@ class NotifMcpToolsTest {
 
     @Mock
     private TestDeliveryService testDelivery;
+
+    @Mock
+    private ScrapeService scrapeService;
+
+    @Mock
+    private JsonMapper jsonMapper;
 
     @InjectMocks
     private NotifMcpTools tools;
@@ -110,5 +118,31 @@ class NotifMcpToolsTest {
                 .contains("email")
                 .contains("sent")
                 .contains("ada@notif.local");
+    }
+
+    @Test
+    void listScrapeSourcesRendersHealth() {
+        when(scrapeService.sources()).thenReturn(List.of(
+                new ScrapeService.SourceHealthView(
+                        "telex", "breaking", "hu", "https://telex.hu/rss", "ok", "ok", Instant.parse("2026-01-01T00:00:00Z"), null, 3)
+        ));
+        assertThat(tools.listScrapeSources()).contains("telex").contains("breaking").contains("ok");
+    }
+
+    @Test
+    void runScrapeAllDelegates() {
+        when(scrapeService.runAll()).thenReturn(List.of());
+        assertThat(tools.runScrape("all")).isEqualTo("(none)");
+        verify(scrapeService).runAll();
+    }
+
+    @Test
+    void exportNormalizedEventsSerializesServicePayload() {
+        List<Map<String, Object>> payload = List.of(Map.of("family", "disaster", "sourceId", "usgs"));
+        when(scrapeService.exportEvents("disaster", null, 10)).thenReturn(payload);
+        when(jsonMapper.writeValueAsString(payload)).thenReturn("[{\"family\":\"disaster\"}]");
+
+        assertThat(tools.exportNormalizedEvents("disaster", null, 10)).contains("disaster");
+        verify(scrapeService).exportEvents("disaster", null, 10);
     }
 }

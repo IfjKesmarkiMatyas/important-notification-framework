@@ -52,3 +52,10 @@ notif:
   pushover:
     app-token: ${PUSHOVER_APP_TOKEN:}
     test-user-key: ${PUSHOVER_TEST_USER_KEY:}
+  scrape:
+    cron: "0 */15 * * * *"
+    telex-url: https://telex.hu/rss
+    bbc-url: https://feeds.bbci.co.uk/news/world/rss.xml
+    usgs-url: https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson
+    coingecko-url: https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd,huf
+    frankfurter-url: https://api.frankfurter.app/latest?from=EUR&to=HUF

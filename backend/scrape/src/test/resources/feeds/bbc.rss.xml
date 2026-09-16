@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>BBC News</title>
+    <item>
+      <title>Major quake hits Tokyo region</title>
+      <link>https://www.bbc.co.uk/news/world-asia-123</link>
+      <guid>https://www.bbc.co.uk/news/world-asia-123</guid>
+      <pubDate>Wed, 16 Sep 2026 12:05:00 GMT</pubDate>
+      <description>A strong earthquake was reported.</description>
+      <category>Asia</category>
+    </item>
+  </channel>
+</rss>

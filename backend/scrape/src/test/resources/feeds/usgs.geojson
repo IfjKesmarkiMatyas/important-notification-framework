@@ -1,0 +1,25 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "us7000test64",
+      "properties": {
+        "mag": 6.4,
+        "place": "near Tokyo, Japan",
+        "time": 1758024000000,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000test64"
+      },
+      "geometry": { "type": "Point", "coordinates": [139.69, 35.68, 10] }
+    },
+    {
+      "id": "us7000test41",
+      "properties": {
+        "mag": 4.1,
+        "place": "12 km S of Reno, Nevada",
+        "time": 1758024100000,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000test41"
+      },
+      "geometry": { "type": "Point", "coordinates": [-119.81, 39.41, 8] }
+    }
+  ]
+}

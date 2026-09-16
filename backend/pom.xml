@@ -20,6 +20,7 @@
   <modules>
     <module>delivery</module>
     <module>identity</module>
+    <module>scrape</module>
     <module>api</module>
   </modules>
 
@@ -45,6 +46,11 @@
       <dependency>
         <groupId>com.notif</groupId>
         <artifactId>identity</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.notif</groupId>
+        <artifactId>scrape</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>
