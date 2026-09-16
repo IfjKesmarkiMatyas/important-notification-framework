@@ -1,0 +1,91 @@
+<section class="panel system">
+  <div class="system-head">
+    <div>
+      <div class="kicker">{{ i18n.t().system }}</div>
+      <p class="mute lead">{{ i18n.t().systemHint }}</p>
+    </div>
+    <div class="engine">
+      <div class="kicker">{{ i18n.t().switchLabel }}</div>
+      <div class="seg">
+        <button
+          class="btn"
+          type="button"
+          [class.ghost]="engine()?.mode !== 'native'"
+          (click)="mode.emit('native')"
+          [disabled]="busy()"
+        >
+          {{ i18n.t().engineNative }}
+        </button>
+        <button
+          class="btn"
+          type="button"
+          [class.ghost]="engine()?.mode !== 'ai'"
+          (click)="mode.emit('ai')"
+          [disabled]="busy()"
+        >
+          {{ i18n.t().engineAi }}
+        </button>
+      </div>
+      @if (engine(); as view) {
+        <p class="mute small">{{ view.openaiConfigured ? i18n.t().openaiReady : i18n.t().missingKey }}</p>
+      }
+    </div>
+  </div>
+
+  <table class="data">
+    <thead>
+      <tr>
+        <th>{{ i18n.t().source }}</th>
+        <th>{{ i18n.t().family }}</th>
+        <th>{{ i18n.t().health }}</th>
+        <th>{{ i18n.t().lastOk }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (source of sources(); track source.sourceId) {
+        <tr [attr.data-health]="source.health">
+          <td>
+            <strong>{{ source.sourceId }}</strong>
+            <div class="mute small">{{ source.locale }}</div>
+          </td>
+          <td>{{ source.family }}</td>
+          <td>
+            <span class="health" [class.danger-text]="source.health === 'error' || source.health === 'silent'">
+              {{ healthLabel(source.health, i18n.t()) }}
+            </span>
+            @if (source.lastError) {
+              <div class="danger-text small">{{ source.lastError }}</div>
+            }
+          </td>
+          <td class="mute">{{ formatWhen(source.lastOkAt) }}</td>
+          <td class="row-actions">
+            <button class="btn ghost" type="button" (click)="run.emit(source.sourceId)" [disabled]="busy()">
+              {{ i18n.t().runNow }}
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="lab">
+    <button class="btn ghost" type="button" (click)="score.emit()" [disabled]="busy()">
+      {{ i18n.t().scoreGolden }}
+    </button>
+    <button class="btn" type="button" (click)="run.emit('all')" [disabled]="busy()">
+      {{ i18n.t().runAll }}
+    </button>
+    @if (golden(); as score) {
+      <p class="mute small golden">
+        F₁ {{ formatF1(score) }} · n={{ score.n }} · TP {{ score.tp }} · FP {{ score.fp }} · FN {{ score.fn }}
+        @if (score.fireLevelChecked) {
+          · {{ i18n.t().levelsOk }} {{ score.fireLevelOk }}/{{ score.fireLevelChecked }}
+        }
+        @if (familyLine(score)) {
+          <span> · {{ familyLine(score) }}</span>
+        }
+      </p>
+    }
+  </div>
+</section>

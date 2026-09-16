@@ -1,6 +1,3 @@
-export type Locale = 'hu' | 'en';
-export type Strings = { [K in keyof typeof STRINGS.hu]: string };
-
 export const STRINGS = {
   hu: {
     brand: 'Notif',
@@ -75,7 +72,14 @@ export const STRINGS = {
     whenBreaking: 'Breaking hír',
     themeToLight: 'Világos téma',
     themeToDark: 'Sötét téma',
-    towerHint: 'Gyűjtőmotor, majd döntés: native vagy AI magyarázat, FIRE mindig az illesztőből.',
+    towerHint: 'Egy esemény története: honnan jött, mit döntöttünk, kinek miért. A rendszer állapota fent.',
+    system: 'Rendszer',
+    systemHint: 'Melyik forrás él vagy hallgat, és a következő döntés melyik aggyal megy.',
+    health: 'Állapot',
+    origin: 'Eredet',
+    normalized: 'Normalizálva',
+    pickEvent: 'Válassz egy eseményt a listából a nyomvonalhoz.',
+    jobs: 'megbízás',
     sources: 'Források',
     events: 'Események',
     runNow: 'Most',
@@ -91,6 +95,7 @@ export const STRINGS = {
     healthIdle: 'Még nem futott',
     lastOk: 'Utolsó siker',
     emptyEvents: 'Még nincs normalizált esemény. Futtasd a gyűjtést.',
+    latestEvents: 'Legutóbbi felvételek',
     eventDetail: 'Részlet',
     rawExcerpt: 'Nyers kivonat',
     occurred: 'Történt',
@@ -183,7 +188,14 @@ export const STRINGS = {
     whenBreaking: 'Breaking news',
     themeToLight: 'Light theme',
     themeToDark: 'Dark theme',
-    towerHint: 'Scrape, then decision: native or AI explanation. FIRE always comes from the matcher.',
+    towerHint: 'One event: where it came from, what we decided, who got it and why. System health above.',
+    system: 'System',
+    systemHint: 'Which source is live or silent, and which brain the next decision uses.',
+    health: 'Health',
+    origin: 'Origin',
+    normalized: 'Normalized',
+    pickEvent: 'Pick an event from the list to see its trail.',
+    jobs: 'jobs',
     sources: 'Sources',
     events: 'Events',
     runNow: 'Run now',
@@ -199,6 +211,7 @@ export const STRINGS = {
     healthIdle: 'Not run yet',
     lastOk: 'Last success',
     emptyEvents: 'No normalized events yet. Run a scrape.',
+    latestEvents: 'Latest intake',
     eventDetail: 'Detail',
     rawExcerpt: 'Raw excerpt',
     occurred: 'Occurred',
@@ -219,3 +232,6 @@ export const STRINGS = {
     levelsOk: 'levels'
   }
 } as const;
+
+export type Locale = 'hu' | 'en';
+export type Strings = { [K in keyof typeof STRINGS.hu]: string };

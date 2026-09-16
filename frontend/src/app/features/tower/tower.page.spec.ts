@@ -3,7 +3,9 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScrapeEventView } from '../../models';
+import { eventMeta, healthLabel } from './tower-format';
 import { TowerPage } from './tower.page';
+import { STRINGS } from '../../core/i18n/strings';
 
 describe('TowerPage', () => {
   let http: HttpTestingController;
@@ -29,8 +31,14 @@ describe('TowerPage', () => {
     return instance;
   }
 
-  it('formats disaster and market cards from payload facts', () => {
+  it('loads system, events and engine switch on open', () => {
     const component = page();
+    expect(component.engineSwitch()?.mode).toBe('native');
+    expect(component.selected()).toBeNull();
+  });
+
+  it('formats disaster and market facts from payload', () => {
+    const t = STRINGS.hu;
     const quake: ScrapeEventView = {
       id: '1',
       family: 'disaster',
@@ -51,8 +59,8 @@ describe('TowerPage', () => {
       sourceId: 'coingecko',
       payload: { instrument: 'bitcoin', movePercent: 8 }
     };
-    expect(component.meta(quake)).toContain('6.4');
-    expect(component.meta(market)).toContain('bitcoin');
-    expect(component.healthLabel('silent')).toBe('Hallgat');
+    expect(eventMeta(quake, t)).toContain('6.4');
+    expect(eventMeta(market, t)).toContain('bitcoin');
+    expect(healthLabel('silent', t)).toBe('Hallgat');
   });
 });

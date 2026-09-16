@@ -1,5 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { DecisionApiService } from '../../api/decision-api.service';
 import { ScrapeApiService } from '../../api/scrape-api.service';
 import { apiError } from '../../core/auth/auth.interceptor';
@@ -11,13 +10,15 @@ import {
   GoldenScore,
   ScrapeEventDetail,
   ScrapeEventView,
-  ScrapeHealth,
   ScrapeSourceView
 } from '../../models';
+import { TowerInbox } from './tower-inbox';
+import { TowerStory } from './tower-story';
+import { TowerSystem } from './tower-system';
 
 @Component({
   selector: 'app-tower',
-  imports: [FormsModule],
+  imports: [TowerSystem, TowerInbox, TowerStory],
   templateUrl: './tower.page.html',
   styleUrl: './tower.page.css'
 })
@@ -33,8 +34,8 @@ export class TowerPage {
   trail = signal<DecisionResult[]>([]);
   engineSwitch = signal<DecisionSwitchView | null>(null);
   golden = signal<GoldenScore | null>(null);
-  family = 'all';
-  sourceId = 'all';
+  family = signal('all');
+  sourceId = signal('all');
   busy = signal(false);
 
   constructor() {
@@ -46,7 +47,7 @@ export class TowerPage {
       next: (sources) => this.sources.set(sources),
       error: (err) => this.toast.show(apiError(err))
     });
-    this.api.events(this.family, this.sourceId).subscribe({
+    this.api.events(this.family(), this.sourceId()).subscribe({
       next: (events) => this.events.set(events),
       error: (err) => this.toast.show(apiError(err))
     });
@@ -54,6 +55,18 @@ export class TowerPage {
       next: (view) => this.engineSwitch.set(view),
       error: (err) => this.toast.show(apiError(err))
     });
+  }
+
+  setFamily(family: string): void {
+    this.family.set(family);
+    this.clearStory();
+    this.reload();
+  }
+
+  setSource(sourceId: string): void {
+    this.sourceId.set(sourceId);
+    this.clearStory();
+    this.reload();
   }
 
   setMode(mode: string): void {
@@ -128,7 +141,7 @@ export class TowerPage {
   }
 
   export(): void {
-    this.api.export(this.family, this.sourceId).subscribe({
+    this.api.export(this.family(), this.sourceId()).subscribe({
       next: (payload) => {
         const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
@@ -142,44 +155,9 @@ export class TowerPage {
     });
   }
 
-  healthLabel(health: ScrapeHealth): string {
-    switch (health) {
-      case 'ok':
-        return this.i18n.t().healthOk;
-      case 'empty':
-        return this.i18n.t().healthEmpty;
-      case 'silent':
-        return this.i18n.t().healthSilent;
-      case 'error':
-        return this.i18n.t().healthError;
-      default:
-        return this.i18n.t().healthIdle;
-    }
-  }
-
-  meta(event: ScrapeEventView): string {
-    const payload = event.payload ?? {};
-    if (event.family === 'disaster') {
-      return `${this.i18n.t().magnitude} ${payload['magnitude'] ?? '—'} · ${payload['place'] ?? ''}`;
-    }
-    if (event.family === 'market') {
-      return `${payload['instrument'] ?? ''} · ${payload['movePercent'] ?? 0}%`;
-    }
-    const topics = Array.isArray(payload['topics']) ? payload['topics'].join(', ') : '';
-    return topics;
-  }
-
-  formatF1(score: GoldenScore | null): string {
-    if (!score || score.f1 == null) {
-      return '—';
-    }
-    return score.f1.toFixed(2);
-  }
-
-  familyLine(score: GoldenScore): string {
-    return (score.byFamily ?? [])
-      .map((slice) => `${slice.name} F₁ ${slice.f1 == null ? '—' : slice.f1.toFixed(2)}`)
-      .join(' · ');
+  private clearStory(): void {
+    this.selected.set(null);
+    this.trail.set([]);
   }
 
   private loadTrail(eventId: string): void {

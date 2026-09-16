@@ -1,0 +1,89 @@
+<section class="panel story">
+  @if (!detail()) {
+    <div class="empty">
+      <div class="kicker">{{ i18n.t().trail }}</div>
+      <p class="mute">{{ i18n.t().pickEvent }}</p>
+    </div>
+  } @else {
+    @if (detail(); as event) {
+      <article class="step">
+        <div class="kicker">{{ i18n.t().origin }}</div>
+        <p>
+          <strong>{{ event.sourceId }}</strong>
+          <span class="mute"> · {{ formatWhen(event.occurredAt) }}</span>
+        </p>
+        @if (event.canonicalUrl) {
+          <a class="btn ghost" [href]="event.canonicalUrl" target="_blank" rel="noreferrer">
+            {{ i18n.t().openSource }}
+          </a>
+        }
+      </article>
+
+      <article class="step">
+        <div class="kicker">{{ i18n.t().normalized }}</div>
+        <h2>{{ event.headline }}</h2>
+        @if (event.summary) {
+          <p>{{ event.summary }}</p>
+        }
+        <p class="mute small">
+          {{ event.family }} · {{ eventMeta(event, i18n.t()) }} · {{ i18n.t().ingested }}
+          {{ formatWhen(event.ingestedAt) }}
+        </p>
+      </article>
+
+      <article class="step">
+        <div class="trail-head">
+          <div>
+            <div class="kicker">{{ i18n.t().trail }}</div>
+            @if (trail().length) {
+              <p class="mute small">
+                {{ fired() }} {{ i18n.t().fire }} · {{ skipped() }} {{ i18n.t().no }}
+              </p>
+            }
+          </div>
+          <button class="btn" type="button" (click)="decide.emit()" [disabled]="busy()">
+            {{ i18n.t().decideNow }}
+          </button>
+        </div>
+        @if (trail().length === 0) {
+          <p class="mute">{{ i18n.t().emptyTrail }}</p>
+        } @else {
+          <ul class="trail">
+            @for (row of trail(); track row.id) {
+              <li>
+                <header>
+                  <strong>{{ row.email }}</strong>
+                  <span class="outcome" [attr.data-outcome]="row.outcome">
+                    {{ outcomeLabel(row.outcome, i18n.t()) }}
+                  </span>
+                </header>
+                <p class="mute small">
+                  {{ row.engine }} · {{ row.level || '—' }}
+                  @if (row.channels.length) {
+                    · {{ row.channels.join(', ') }}
+                  }
+                  @if (row.deliveryJobIds.length) {
+                    · {{ row.deliveryJobIds.length }} {{ i18n.t().jobs }}
+                  }
+                </p>
+                @if (row.reason) {
+                  <p>{{ row.reason }}</p>
+                }
+                @if (row.errorMessage) {
+                  <p class="danger-text">{{ row.errorMessage }}</p>
+                }
+              </li>
+            }
+          </ul>
+        }
+      </article>
+
+      @if (event.rawExcerpt) {
+        <details class="step evidence">
+          <summary>{{ i18n.t().rawExcerpt }}</summary>
+          <pre>{{ event.rawExcerpt }}</pre>
+        </details>
+      }
+    }
+  }
+</section>

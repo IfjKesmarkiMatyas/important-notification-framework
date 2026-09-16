@@ -1,0 +1,50 @@
+<section class="panel inbox">
+  <div class="toolbar">
+    <div>
+      <div class="kicker">{{ i18n.t().events }}</div>
+      <p class="mute small count">{{ events().length }} · {{ i18n.t().latestEvents }}</p>
+    </div>
+    <button class="btn ghost" type="button" (click)="download.emit()">{{ i18n.t().exportFixtures }}</button>
+  </div>
+  <div class="filters">
+    <label class="field">
+      <span>{{ i18n.t().family }}</span>
+      <select [ngModel]="family()" (ngModelChange)="familyChange.emit($event)">
+        <option value="all">{{ i18n.t().all }}</option>
+        <option value="breaking">breaking</option>
+        <option value="market">market</option>
+        <option value="disaster">disaster</option>
+      </select>
+    </label>
+    <label class="field">
+      <span>{{ i18n.t().source }}</span>
+      <select [ngModel]="sourceId()" (ngModelChange)="sourceIdChange.emit($event)">
+        <option value="all">{{ i18n.t().all }}</option>
+        @for (source of sources(); track source.sourceId) {
+          <option [value]="source.sourceId">{{ source.sourceId }}</option>
+        }
+      </select>
+    </label>
+  </div>
+  @if (events().length === 0) {
+    <p class="mute">{{ i18n.t().emptyEvents }}</p>
+  } @else {
+    <div class="rows">
+      @for (event of events(); track event.id) {
+        <button
+          class="row"
+          type="button"
+          [class.on]="selectedId() === event.id"
+          (click)="open.emit(event)"
+        >
+          <header>
+            <span class="badge">{{ event.family }}</span>
+            <span class="mute small">{{ formatWhen(event.occurredAt) }}</span>
+          </header>
+          <strong>{{ event.headline }}</strong>
+          <p class="mute small">{{ event.sourceId }} · {{ eventMeta(event, i18n.t()) }}</p>
+        </button>
+      }
+    </div>
+  }
+</section>
