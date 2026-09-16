@@ -11,7 +11,7 @@ Meghívásos kör. Nincs nyilvános regisztráció. A human UI: user = saját, a
 | Szerep | Hol él | Mit tehet |
 |---|---|---|
 | `USER` | Meghívott ember | Saját kit, saját preferencia, saját profil |
-| `ADMIN` | Ember | Meghív, visszavon, inaktivál, bármely kit, default sablon, (később) native/AI váltó |
+| `ADMIN` | Ember | Meghív, visszavon, inaktivál, bármely kit, default sablon, native/AI váltó |
 | `MCP_ADMIN` | Gép | Admin jog toolokból; nem jelentkezik a Angularba |
 
 A meghívott **nem** lesz automatikusan admin.

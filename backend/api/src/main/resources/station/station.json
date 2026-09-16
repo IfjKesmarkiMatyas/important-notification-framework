@@ -1,0 +1,579 @@
+{
+  "version": 1,
+  "password": "stationstation",
+  "users": [
+    {
+      "email": "ada@notif.local",
+      "displayName": "Ada",
+      "status": "ACTIVE",
+      "kit": {
+        "version": 1,
+        "preferences": {
+          "channels": {
+            "email": true,
+            "slack": false,
+            "pushover": false
+          },
+          "email": "",
+          "slack": {
+            "mode": "chatbot",
+            "userId": ""
+          },
+          "pushoverUserKey": ""
+        },
+        "interests": [
+          {
+            "type": "disaster",
+            "kind": "earthquake",
+            "minMagnitude": 6
+          },
+          {
+            "type": "market",
+            "instrument": "bitcoin",
+            "movePercent": 5
+          },
+          {
+            "type": "breaking",
+            "topics": [
+              "belfold"
+            ]
+          }
+        ]
+      },
+      "rulesHu": {
+        "locale": "hu",
+        "rules": [
+          {
+            "when": "disaster.earthquake.minMagnitude",
+            "level": "critical"
+          },
+          {
+            "when": "market.movePercent",
+            "level": "high"
+          },
+          {
+            "when": "breaking",
+            "level": "medium"
+          }
+        ]
+      },
+      "rulesEn": {
+        "locale": "en",
+        "rules": [
+          {
+            "when": "disaster.earthquake.minMagnitude",
+            "level": "critical"
+          },
+          {
+            "when": "market.movePercent",
+            "level": "high"
+          },
+          {
+            "when": "breaking",
+            "level": "medium"
+          }
+        ]
+      }
+    },
+    {
+      "email": "bela@notif.local",
+      "displayName": "Béla",
+      "status": "ACTIVE",
+      "kit": {
+        "version": 1,
+        "preferences": {
+          "channels": {
+            "email": false,
+            "slack": true,
+            "pushover": false
+          },
+          "email": "",
+          "slack": {
+            "mode": "chatbot",
+            "userId": "U_BELA"
+          },
+          "pushoverUserKey": ""
+        },
+        "interests": [
+          {
+            "type": "market",
+            "instrument": "bitcoin",
+            "movePercent": 5
+          }
+        ]
+      },
+      "rulesHu": {
+        "locale": "hu",
+        "rules": [
+          {
+            "when": "disaster.earthquake.minMagnitude",
+            "level": "critical"
+          },
+          {
+            "when": "market.movePercent",
+            "level": "high"
+          },
+          {
+            "when": "breaking",
+            "level": "medium"
+          }
+        ]
+      },
+      "rulesEn": {
+        "locale": "en",
+        "rules": [
+          {
+            "when": "disaster.earthquake.minMagnitude",
+            "level": "critical"
+          },
+          {
+            "when": "market.movePercent",
+            "level": "high"
+          },
+          {
+            "when": "breaking",
+            "level": "medium"
+          }
+        ]
+      }
+    },
+    {
+      "email": "cora@notif.local",
+      "displayName": "Cora",
+      "status": "ACTIVE",
+      "kit": {
+        "version": 1,
+        "preferences": {
+          "channels": {
+            "email": true,
+            "slack": false,
+            "pushover": false
+          },
+          "email": "",
+          "slack": {
+            "mode": "chatbot",
+            "userId": ""
+          },
+          "pushoverUserKey": ""
+        },
+        "interests": [
+          {
+            "type": "disaster",
+            "kind": "earthquake",
+            "minMagnitude": 7
+          }
+        ]
+      },
+      "rulesHu": {
+        "locale": "hu",
+        "rules": [
+          {
+            "when": "disaster.earthquake.minMagnitude",
+            "level": "critical"
+          },
+          {
+            "when": "market.movePercent",
+            "level": "high"
+          },
+          {
+            "when": "breaking",
+            "level": "medium"
+          }
+        ]
+      },
+      "rulesEn": {
+        "locale": "en",
+        "rules": [
+          {
+            "when": "disaster.earthquake.minMagnitude",
+            "level": "critical"
+          },
+          {
+            "when": "market.movePercent",
+            "level": "high"
+          },
+          {
+            "when": "breaking",
+            "level": "medium"
+          }
+        ]
+      }
+    },
+    {
+      "email": "denes@notif.local",
+      "displayName": "Dénes",
+      "status": "INACTIVE",
+      "kit": {
+        "version": 1,
+        "preferences": {
+          "channels": {
+            "email": true,
+            "slack": false,
+            "pushover": false
+          },
+          "email": "",
+          "slack": {
+            "mode": "chatbot",
+            "userId": ""
+          },
+          "pushoverUserKey": ""
+        },
+        "interests": [
+          {
+            "type": "disaster",
+            "kind": "earthquake",
+            "minMagnitude": 6
+          },
+          {
+            "type": "market",
+            "instrument": "bitcoin",
+            "movePercent": 5
+          },
+          {
+            "type": "breaking",
+            "topics": [
+              "belfold"
+            ]
+          }
+        ]
+      },
+      "rulesHu": {
+        "locale": "hu",
+        "rules": [
+          {
+            "when": "disaster.earthquake.minMagnitude",
+            "level": "critical"
+          },
+          {
+            "when": "market.movePercent",
+            "level": "high"
+          },
+          {
+            "when": "breaking",
+            "level": "medium"
+          }
+        ]
+      },
+      "rulesEn": {
+        "locale": "en",
+        "rules": [
+          {
+            "when": "disaster.earthquake.minMagnitude",
+            "level": "critical"
+          },
+          {
+            "when": "market.movePercent",
+            "level": "high"
+          },
+          {
+            "when": "breaking",
+            "level": "medium"
+          }
+        ]
+      }
+    },
+    {
+      "email": "elena@notif.local",
+      "displayName": "Elena",
+      "status": "ACTIVE",
+      "kit": {
+        "version": 1,
+        "preferences": {
+          "channels": {
+            "email": true,
+            "slack": false,
+            "pushover": false
+          },
+          "email": "",
+          "slack": {
+            "mode": "chatbot",
+            "userId": ""
+          },
+          "pushoverUserKey": ""
+        },
+        "interests": [
+          {
+            "type": "breaking",
+            "topics": [
+              "world"
+            ]
+          }
+        ]
+      },
+      "rulesHu": {
+        "locale": "hu",
+        "rules": [
+          {
+            "when": "disaster.earthquake.minMagnitude",
+            "level": "critical"
+          },
+          {
+            "when": "market.movePercent",
+            "level": "high"
+          },
+          {
+            "when": "breaking",
+            "level": "medium"
+          }
+        ]
+      },
+      "rulesEn": {
+        "locale": "en",
+        "rules": [
+          {
+            "when": "disaster.earthquake.minMagnitude",
+            "level": "critical"
+          },
+          {
+            "when": "market.movePercent",
+            "level": "high"
+          },
+          {
+            "when": "breaking",
+            "level": "medium"
+          }
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "faa5eaf2-a7cc-452d-a35f-6de0ac5c4307",
+      "family": "disaster",
+      "locale": "en",
+      "payload": {
+        "lat": 56.199,
+        "lon": -156.488,
+        "kind": "earthquake",
+        "place": "119 km E of Chignik, Alaska",
+        "magnitude": 4
+      },
+      "summary": "119 km E of Chignik, Alaska",
+      "headline": "4 — 119 km E of Chignik, Alaska",
+      "sourceId": "usgs",
+      "externalId": "aka2026shusro",
+      "occurredAt": "2026-09-15T16:32:38.168+02:00",
+      "canonicalUrl": "https://earthquake.usgs.gov/earthquakes/eventpage/aka2026shusro",
+      "caseId": "D1_clear_miss_quake_4x"
+    },
+    {
+      "id": "dadf63b8-35ff-4210-91bf-7e1ac91e0bd5",
+      "family": "disaster",
+      "locale": "en",
+      "payload": {
+        "lat": -14.5704,
+        "lon": -73.6538,
+        "kind": "earthquake",
+        "place": "38 km NE of Tambo, Peru",
+        "magnitude": 6.7
+      },
+      "summary": "38 km NE of Tambo, Peru",
+      "headline": "6.7 — 38 km NE of Tambo, Peru",
+      "sourceId": "usgs",
+      "externalId": "us6000tm81",
+      "occurredAt": "2026-08-20T20:00:18.619+02:00",
+      "canonicalUrl": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tm81",
+      "caseId": "D2_clear_hit_quake_67"
+    },
+    {
+      "id": "51908b3a-db12-4e64-af53-b6cfb42a379e",
+      "family": "disaster",
+      "locale": "en",
+      "payload": {
+        "lat": -7.2863,
+        "lon": 128.9383,
+        "kind": "earthquake",
+        "place": "253 km ENE of Lospalos, Timor Leste",
+        "magnitude": 5.9
+      },
+      "summary": "253 km ENE of Lospalos, Timor Leste",
+      "headline": "5.9 — 253 km ENE of Lospalos, Timor Leste",
+      "sourceId": "usgs",
+      "externalId": "us7000tgl2",
+      "occurredAt": "2026-09-11T13:56:23.115+02:00",
+      "canonicalUrl": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tgl2",
+      "caseId": "D3_near_miss_59"
+    },
+    {
+      "id": "25670d3c-4875-42dd-9e72-cbb338aeb355",
+      "family": "disaster",
+      "locale": "en",
+      "payload": {
+        "lat": 13.2654,
+        "lon": 50.5425,
+        "kind": "earthquake",
+        "place": "145 km N of Caluula, Somalia",
+        "magnitude": 6
+      },
+      "summary": "145 km N of Caluula, Somalia",
+      "headline": "6 — 145 km N of Caluula, Somalia",
+      "sourceId": "usgs",
+      "externalId": "us7000tcf3",
+      "occurredAt": "2026-08-27T23:07:38.352+02:00",
+      "canonicalUrl": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tcf3",
+      "caseId": "D4_exact_threshold_60"
+    },
+    {
+      "id": "34de829a-8072-4bf9-9a0e-b6d5afbc78fc",
+      "family": "market",
+      "locale": "en",
+      "payload": {
+        "priceUsd": 81321.7073624723,
+        "instrument": "bitcoin",
+        "movePercent": 4.7,
+        "previousUsd": 77681.57571419993
+      },
+      "summary": "CoinGecko market_chart sample",
+      "headline": "bitcoin 81321.7073624723",
+      "sourceId": "coingecko",
+      "externalId": "bitcoin@2026-09-03T16:00:00Z",
+      "occurredAt": "2026-09-03T18:00:00+02:00",
+      "canonicalUrl": "https://www.coingecko.com/",
+      "caseId": "M1_btc_near_miss_under_5"
+    },
+    {
+      "id": "efd363d8-25bc-43bd-b805-1594457c5729",
+      "family": "market",
+      "locale": "en",
+      "payload": {
+        "window": "14d-span-from-scraped-chart",
+        "priceUsd": 81321.7073624723,
+        "instrument": "bitcoin",
+        "movePercent": 7.6,
+        "previousUsd": 75610.0
+      },
+      "summary": "Derived from scraped CoinGecko market_chart min/max",
+      "headline": "bitcoin 14d 75610.0->81321.7073624723",
+      "sourceId": "coingecko",
+      "externalId": "bitcoin@14d-span",
+      "occurredAt": "2026-09-16T17:30:08+02:00",
+      "canonicalUrl": "https://www.coingecko.com/",
+      "caseId": "M2_btc_14d_span_hit"
+    },
+    {
+      "id": "fde067b4-4f88-44a3-84a0-ea2659aa4108",
+      "family": "market",
+      "locale": "en",
+      "payload": {
+        "window": "14d-span-from-scraped-chart",
+        "priceUsd": 2559.447642255112,
+        "instrument": "ethereum",
+        "movePercent": 7.2,
+        "previousUsd": 2386.9
+      },
+      "summary": "Derived from scraped CoinGecko market_chart min/max",
+      "headline": "ethereum 14d 2386.9->2559.447642255112",
+      "sourceId": "coingecko",
+      "externalId": "ethereum@14d-span",
+      "occurredAt": "2026-09-16T17:30:08+02:00",
+      "canonicalUrl": "https://www.coingecko.com/",
+      "caseId": "M3_eth_wrong_instrument"
+    },
+    {
+      "id": "42d72936-3b7f-4f9c-a786-e6549560d0ae",
+      "family": "market",
+      "locale": "en",
+      "payload": {
+        "priceHuf": 364.45,
+        "instrument": "eurhuf",
+        "movePercent": 0.0,
+        "previousHuf": 364.45,
+        "previousUsd": null
+      },
+      "summary": "Frankfurter ECB rate",
+      "headline": "EUR/HUF 364.45",
+      "sourceId": "frankfurter",
+      "externalId": "eurhuf@2026-09-16",
+      "occurredAt": "2026-09-16T02:00:00+02:00",
+      "canonicalUrl": "https://www.frankfurter.app/",
+      "caseId": "M4_fx_eurhuf"
+    },
+    {
+      "id": "b0ebb826-b16e-44bf-950c-ca7404bb55b4",
+      "family": "breaking",
+      "locale": "hu",
+      "payload": {
+        "topics": [
+          "belfold"
+        ]
+      },
+      "summary": "Már jövő kedden újranyit a Terror Háza, első körben még a Schmidt Mária-féle koncepció szerint.",
+      "headline": "Tarr Zoltán meggondolta magát: mégsem zárják be az átvilágítás idejére a Terror Házát",
+      "sourceId": "telex",
+      "externalId": "https://telex.hu/belfold/2026/09/16/tarr-zoltan-ujranyitjak-a-terror-hazat",
+      "occurredAt": "2026-09-16T17:16:15+02:00",
+      "canonicalUrl": "https://telex.hu/belfold/2026/09/16/tarr-zoltan-ujranyitjak-a-terror-hazat",
+      "caseId": "B1_telex_belfold_hit"
+    },
+    {
+      "id": "60c29fad-be67-47bb-84ab-eb80373631f1",
+      "family": "breaking",
+      "locale": "hu",
+      "payload": {
+        "topics": [
+          "kulfold"
+        ]
+      },
+      "summary": "A hibrid fenyegetések elleni védekezésről szóló, jogi következmények nélküli szövegre a Tiszából és DK-ból igennel, a Fidesz–KDNP-ből és a Mi Hazánkból nemmel szavaztak.",
+      "headline": "EP: Oroszország a legsúlyosabb hibrid fenyegetés az EU-ra és tagállamaira",
+      "sourceId": "telex",
+      "externalId": "https://telex.hu/kulfold/2026/09/16/eu-europai-parlament-hibrid-tamadasok-oroszorszag",
+      "occurredAt": "2026-09-16T15:43:47+02:00",
+      "canonicalUrl": "https://telex.hu/kulfold/2026/09/16/eu-europai-parlament-hibrid-tamadasok-oroszorszag",
+      "caseId": "B2_telex_kulfold_miss"
+    },
+    {
+      "id": "352a9942-8f6c-4560-b675-044346fe9594",
+      "family": "breaking",
+      "locale": "en",
+      "payload": {
+        "topics": [
+          "world",
+          "business"
+        ]
+      },
+      "summary": "The BBC’s Samira Hussain explains why some could see increased interest rates for mortgages and business loans.",
+      "headline": "How rising bond yields impact American consumers",
+      "sourceId": "bbc",
+      "externalId": "https://www.bbc.co.uk/news/videos/cwz0zpyzrlr1o#1",
+      "occurredAt": "2026-09-16T05:58:32+02:00",
+      "canonicalUrl": "https://www.bbc.co.uk/news/videos/cwz0zpyzrlr1o?at_medium=RSS&at_campaign=rss",
+      "caseId": "B3_bbc_world_miss_on_hu_kit"
+    },
+    {
+      "id": "59691644-eabe-4049-8c4d-9aa6bdcd8b6a",
+      "family": "breaking",
+      "locale": "en",
+      "payload": {
+        "topics": [
+          "world",
+          "science"
+        ]
+      },
+      "summary": "A new report warns Himalayan glaciers are melting faster, threatening India’s water, economy and communities.",
+      "headline": "The Himalayas are melting faster - and India's economy is 'at risk'",
+      "sourceId": "bbc",
+      "externalId": "https://www.bbc.co.uk/news/articles/crm9ezvwjpno#0",
+      "occurredAt": "2026-09-14T00:07:22+02:00",
+      "canonicalUrl": "https://www.bbc.co.uk/news/articles/crm9ezvwjpno?at_medium=RSS&at_campaign=rss",
+      "caseId": "B4_bbc_science_en_kit"
+    },
+    {
+      "id": "66f0d842-e7fa-4473-b43e-f552812510f4",
+      "family": "breaking",
+      "locale": "hu",
+      "payload": {
+        "topics": [
+          "pr_cikk"
+        ]
+      },
+      "summary": "A SPAR Zenei Kihívás tavasszal arra hívta az általános iskolásokat, hogy énekeljenek együtt, és mutassák meg saját videóikban, mit jelent számukra a zene és a közös alkotás.",
+      "headline": "Egy dal, 3000 gyermek: így énekelt együtt az egész ország (x)",
+      "sourceId": "telex",
+      "externalId": "https://telex.hu/pr-cikk/2026/09/16/egy-dal-3000-gyermek-igy-enekelt-egyutt-egy-egesz-orszag-x",
+      "occurredAt": "2026-09-16T10:55:00+02:00",
+      "canonicalUrl": "https://telex.hu/pr-cikk/2026/09/16/egy-dal-3000-gyermek-igy-enekelt-egyutt-egy-egesz-orszag-x",
+      "caseId": "B5_telex_pr_noise"
+    }
+  ]
+}

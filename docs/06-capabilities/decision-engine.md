@@ -17,13 +17,13 @@ A kimenet: döntés + kézbesítési megbízás(ok). A küldést a kézbesítő 
 | Mód | Mikor fut | Küld-e |
 |---|---|---|
 | **Native** | A váltó `native` | Igen, a user `rules.hu` / `rules.en` file-ja szerint |
-| **AI** | A váltó `ai` | Igen, a kit érdekeltsége + az esemény alapján |
+| **AI** | A váltó `ai` | FIRE a matcher szerint; a modell csak `{reason}`-t ír. Kulcs nélkül fail-closed. |
 | Árnyék | **Nincs** | — |
 | Hírszintű admin stop | **Nincs** | — |
 
 A váltó **rendszer-setting** (admin + MCP). A következő döntés a beállított aggyal megy; a másik **nem** fut mellé, nem hasonlítgatjuk élőben.
 
-A native szabály **userenként és nyelvenként** file: `rules.hu.json`, `rules.en.json` (default másolat, utána szerkeszthető). Magyar eseménynél / magyar kimenetnél a hu, angolnál az en.
+A native szabály **userenként és nyelvenként** file: `rules.hu.json`, `rules.en.json` (default másolat, utána szerkeszthető). Magyar eseménynél / magyar kimenetnél a hu, angolnál az en. Az AI **nem** dönt FIRE/NO-t.
 
 ## Amit tudnia kell (V1)
 
@@ -32,7 +32,8 @@ A native szabály **userenként és nyelvenként** file: `rules.hu.json`, `rules
 - Userenkénti illesztés; szüneteltetett / meg nem hívott: nincs megbízás.
 - Csatorna = a kit `preferences.channels` (email és/vagy Slack chatbot, tetszőleges).
 - Magyarázat; native-nál ismételhető ugyanarra a kit+esemény párra.
-- Dedup: ugyanaz a történést, userenként egyszer; fejlemény külön.
+- Dedup: ugyanaz a történést, userenként egyszer (`user_id, source_id, external_id`); D9 világesemény-összevonás később.
+- AI: csak magyarázat, FIRE a matcherből.
 
 ## Amit szándékosan nem csinál
 
@@ -64,6 +65,6 @@ Bedobott normalizált eseményekkel, élő scrape nélkül. A kézbesítő már 
 | 3 | Földrengés 4.1 | A: ≥6 | A: nem |
 | 4 | Bitcoin +8% | B: market 5%, csak slack | B: csak chatbot |
 | 5 | Telex breaking, A szünet | inaktív kit | nincs új megbízás |
-| 6 | Váltó `ai` | ugyanaz mint 1 | a következő 1-es típusú esemény AI-magyarázattal megy, native nem fut mellé |
+| 6 | Váltó `ai` | ugyanaz mint 1 | FIRE a matcher szerint; a magyarázat AI-tól; native nem fut *árnyékként* mellé |
 
 Pass: 1–5 native-on; 6 a váltót bizonyítja. Nincs „mindkét agy listája” képernyő.

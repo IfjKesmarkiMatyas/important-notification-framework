@@ -1,16 +1,27 @@
-# Notification Framework — üzleti tervezés (1. kör)
+# Notification Framework — üzleti dokumentáció
 
-Ez a mappa a termék **üzleti** tervezését tartalmazza.  
-Ebben a körben **nincs implementáció**: cél a deliverable-ök, a kivitelezési sorrend és az egyenként átadható / tesztelhető szeletek rögzítése.
+Ez a mappa a termék **üzleti** szerződését tartalmazza: deliverable-ök, sorrend, tesztelhető szeletek, motorhatárok.
 
-A technikai irány (Java / Spring backend, PostgreSQL, Angular frontend, motorokra bontott backend) **adottság**, de a dokumentumok szándékosan nem kód-, API- vagy sématervek.
+A kód **megvan**. Indítás, station, teszt: a gyökér [README.md](../README.md). A doksik szándékosan nem API-katalógusok; ahol a viselkedés a kódban pontosabb (pl. AI csak magyarázat), a képességdoksi a ténnyel együtt él.
+
+## Állapot (2026-09-16)
+
+| Fázis | Terv | Kód |
+|---|---|---|
+| 0 szerződés | D0, szótár, zárt típusok | [02-glossary.md](02-glossary.md), default kit + rules.hu/en |
+| 1 kézbesítő | email + Slack chatbot | `delivery` modul, Mailpit / Slack adapter |
+| 2 UI + userek | meghívás, kit, admin | Angular 20 Notif Ink |
+| 3 gyűjtő | 15 p cron, Telex/BBC/USGS/CoinGecko/Frankfurter | `scrape` modul |
+| 4 döntés | native **vagy** AI, váltó | native F₁ = 1.00 a 65 mintán; AI csak `{reason}`; D9 később |
+
+Tesztállomány userekkel és scrapelt eseményekkel: [station/](../station/). Golden: [11-decision-fixtures/](11-decision-fixtures/).
 
 ## Lezárt üzleti döntések (2026-09-16)
 
 - Több user, JSON **kit** (érdekeltség + preferencia + `rules.hu` / `rules.en`); új usernél **default másolat**.
 - Meghívásos felvétel; admin élőben ír; ami a deliveryben van, **kimegy**.
-- Native **vagy** AI, **váltósetting** — **nincs árnyéküzemmód**.
-- Kivitelezés: **kézbesítő → UI → gyűjtő → döntés**.
+- Native **vagy** AI, **váltósetting** — **nincs árnyéküzemmód**. FIRE mindig a determinisztikus matcher; az AI nem írja felül.
+- Kivitelezés: **kézbesítő → UI → gyűjtő → döntés** (ez lefutott).
 - Mindhárom eseménycsalád; zárt típusok; Slack **chatbot**; 15 perc cron; user bármit beállíthat a csatornára; nincs digest.
 - MCP = **admin jogú gépfelhasználó**.
 - Források: Telex kötelező + USGS + CoinGecko — [09-v1-sources-and-branding.md](09-v1-sources-and-branding.md).
@@ -41,13 +52,13 @@ Kivitelezés: **kézbesítő → UI → gyűjtő → döntés**. MCP: **admin jo
 Három motor + irányítópult + gép-kapu:
 
 1. **Gyűjtőmotor** — információt szed le változó forrásokból, közös alakra hozza.
-2. **Döntésmotor** — mi fontos, kinek, milyen csatornán; **native vagy AI**, váltóval (nem egyszerre).
-3. **Kézbesítőmotor** — email + Slack chatbot (ezt építjük először).
-4. **Admin felület** — motorok, nyomvonal, userek, JSON kit, váltó.
+2. **Döntésmotor** — mi fontos, kinek, milyen csatornán; **native vagy AI**, váltóval (nem egyszerre). FIRE = matcher; AI = magyarázat.
+3. **Kézbesítőmotor** — email + Slack chatbot.
+4. **Admin felület** — motorok, nyomvonal (system / inbox / story), userek, JSON kit, váltó.
 5. **MCP** — admin jogú gépfelhasználó.
 
-## Szándékos korlát ebben a körben
+## Szándékos korlát (V1)
 
-- Nincs kód, séma, endpoint-lista, sprintbontás story pointtal.
-- Nincs vendor- vagy hosting-döntés.
-- A kérdések lezárva; egyedül a last-write-wins a kit egyidejű szerkesztésére maradt nyitva.
+- Nincs vendor- vagy hosting-döntés a doksiban.
+- D9 összevonás, AI FIRE-felülírás, árnyék, hírszintű admin-stop: kint.
+- A last-write-wins a kit egyidejű szerkesztésére maradt nyitva.

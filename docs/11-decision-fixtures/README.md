@@ -2,6 +2,8 @@
 
 A native döntésmotor a [golden truth](golden-truth.md) 65 mintáján F₁ = 1.00. Ez a mappa a **gyűjtőből** származó élő normalizált eseményekből rak össze egy létrát: egyszerű egyértelmű találat/melléfogás → küszöb → rossz instrumentum → témaillesztés → zaj → szüneteltetett user.
 
+Ugyanezek a personák + a 13 unique esemény a [station/](../../station/) tesztállományban, scriptezhetően betölthető (`scripts/load-station.ps1`), élő scrape nélkül.
+
 A nyers feed **nem** megy a döntésnek. Csak a `selected.json` alak.
 
 ## Értékelés (tökéletesítés)

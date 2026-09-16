@@ -55,6 +55,9 @@ class NotifMcpToolsTest {
     private GoldenEvaluator golden;
 
     @Mock
+    private com.notif.api.station.StationService station;
+
+    @Mock
     private JsonMapper jsonMapper;
 
     @InjectMocks
@@ -167,5 +170,14 @@ class NotifMcpToolsTest {
         when(golden.score()).thenReturn(score);
         when(jsonMapper.writeValueAsString(score)).thenReturn("{\"f1\":1.0}");
         assertThat(tools.scoreGolden()).contains("1.0");
+    }
+
+    @Test
+    void loadStationDefaultsDecideTrue() {
+        var view = new com.notif.common.dto.station.StationLoadView(5, 13, 0, 65, 7);
+        when(station.load(true)).thenReturn(view);
+        when(jsonMapper.writeValueAsString(view)).thenReturn("{\"fired\":7}");
+        assertThat(tools.loadStation(null)).contains("7");
+        verify(station).load(true);
     }
 }

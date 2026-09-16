@@ -33,7 +33,7 @@ Ha a 2-es pontban a tulajdonos „majdnem jó, de…” — a szelet nincs kész
 | 7 | Admin userenként látja az okot; ami deliveryben volt, kiment | S6–S7, S1c |
 | 8 | Motorhiba helye + MCP admin gépuserrel | S8, D11 |
 
-**Plus:** Slack = chatbot. MCP = admin gépuser. Nincs árnyék, nincs digest.
+**Plus:** Slack = chatbot. MCP = admin gépuser. Nincs árnyék, nincs digest. Native F₁ a golden 65-ön: lásd [11-decision-fixtures/accuracy.md](11-decision-fixtures/accuracy.md). D9 összevonás V1-ben nem kész.
 
 Nem V1-feltétel:
 

@@ -12,6 +12,8 @@ public interface NormalizedEventRepository extends JpaRepository<NormalizedEvent
 
     boolean existsBySourceIdAndExternalId(SourceId sourceId, String externalId);
 
+    Optional<NormalizedEvent> findBySourceIdAndExternalId(SourceId sourceId, String externalId);
+
     List<NormalizedEvent> findTop100ByOrderByIngestedAtDesc();
 
     List<NormalizedEvent> findTop100ByFamilyOrderByIngestedAtDesc(EventFamily family);

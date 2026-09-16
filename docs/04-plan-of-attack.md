@@ -4,6 +4,8 @@ Cél: **ne az egész terméket egyszerre** építeni, hanem olyan sorrendben hal
 
 Technikai sprintterv ez **nem**. A motorok sorrendje **lezárt**.
 
+**Állapot (2026-09-16):** a négy fázis kódja bent van. D9 (két forrás → egy világesemény) és az AI FIRE-felülírás szándékosan később. Indítás: [README.md](../README.md). Tesztállomány: [station/](../station/).
+
 ---
 
 ## Lezárt kivitelezési sorrend

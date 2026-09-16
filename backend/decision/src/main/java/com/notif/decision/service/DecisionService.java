@@ -90,6 +90,11 @@ public class DecisionService implements NormalizedEventListener {
 
     @Transactional
     public List<DecisionResult> evaluate(NormalizedEvent event) {
+        return evaluate(event, users.list());
+    }
+
+    @Transactional
+    public List<DecisionResult> evaluate(NormalizedEvent event, List<AppUser> cohort) {
         DecisionEngineMode mode = requireSettings().getMode();
         DecisionRun run = new DecisionRun();
         run.setId(UUID.randomUUID());
@@ -102,7 +107,7 @@ public class DecisionService implements NormalizedEventListener {
         runs.save(run);
 
         List<DecisionResult> results = new ArrayList<>();
-        for (AppUser user : users.list()) {
+        for (AppUser user : cohort) {
             UserDecision row = decisions
                     .findByUserIdAndSourceIdAndExternalId(user.getId(), event.getSourceId().name(), event.getExternalId())
                     .orElseGet(() -> persist(run.getId(), event, user, decide(event, user, mode)));

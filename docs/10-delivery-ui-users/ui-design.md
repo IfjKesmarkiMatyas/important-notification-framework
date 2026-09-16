@@ -51,10 +51,10 @@ ADMIN  (a user shell + )
   /admin/people/:id   kit másé
   /admin/delivery     jobok (invite/test/alert), státusz
   /admin/defaults     default kit sablon
-  /admin/tower        hely a későbbi nyomvonalnak (üres állapot, nem fake adat)
+  /admin/tower        gyűjtő + döntés: system / inbox / story, native/AI váltó, Golden F₁
 ```
 
-Kevesebb menü, mint a fenti lista: **People**, **Delivery**, **Defaults**, **Saját kit**. A tower fázis 3–4-ig egy mondatos üres állapot.
+Kevesebb menü, mint a fenti lista: **People**, **Delivery**, **Defaults**, **Tower**, **Saját kit**.
 
 ---
 
@@ -88,7 +88,7 @@ A motor tükre: purpose, csatorna, címzett, állapot. Tesztküldés gomb (email
 
 ---
 
-## Fázis 2-ben szándékosan váz
+## Fázis 2-ben szándékosan váz (azóta bent)
 
-- Nyomvonal-nézet, scrape egészség, native/AI váltó: **helyük megvan**, tartalmuk a 3–4. fázis.
+- Nyomvonal, scrape egészség, native/AI váltó: a Tower **system / inbox / story** oszlopai.
 - Slack chatbot bekötés a user kitben mezőként (slack user id), a meghívás ettől még email.

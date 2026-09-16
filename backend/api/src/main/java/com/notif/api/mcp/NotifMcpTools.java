@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.notif.common.domain.delivery.DeliveryChannelType;
 import com.notif.common.entity.scrape.ScrapeRun;
 import com.notif.delivery.service.DeliveryService;
+import com.notif.api.station.StationService;
 import com.notif.decision.eval.GoldenEvaluator;
 import com.notif.decision.service.DecisionService;
 import com.notif.identity.service.InviteService;
@@ -27,6 +28,7 @@ public class NotifMcpTools {
     private final ScrapeService scrapeService;
     private final DecisionService decisions;
     private final GoldenEvaluator golden;
+    private final StationService station;
     private final JsonMapper jsonMapper;
 
     public NotifMcpTools(
@@ -37,6 +39,7 @@ public class NotifMcpTools {
             ScrapeService scrapeService,
             DecisionService decisions,
             GoldenEvaluator golden,
+            StationService station,
             JsonMapper jsonMapper
     ) {
         this.invites = invites;
@@ -46,6 +49,7 @@ public class NotifMcpTools {
         this.scrapeService = scrapeService;
         this.decisions = decisions;
         this.golden = golden;
+        this.station = station;
         this.jsonMapper = jsonMapper;
     }
 
@@ -188,5 +192,12 @@ public class NotifMcpTools {
     @McpTool(name = "score_golden", description = "Score the native decision engine against the 65-sample golden corpus")
     public String scoreGolden() {
         return jsonMapper.writeValueAsString(golden.score());
+    }
+
+    @McpTool(name = "load_station", description = "Load the repo test station: Ada/Béla/Cora/Dénes/Elena plus scraped golden events, then run decisions")
+    public String loadStation(
+            @McpToolParam(description = "If true, run the decision engine after insert") Boolean decide
+    ) {
+        return jsonMapper.writeValueAsString(station.load(decide == null || decide));
     }
 }

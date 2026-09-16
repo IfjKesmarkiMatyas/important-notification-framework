@@ -3,6 +3,8 @@
 Ezek a dokumentumok azt írják le, **mit csinál** egy motor vagy felület, kivel szerződik, és **hogyan tesztelhető** egyedül.  
 Nem tartalmaznak osztályokat, topicneveket, táblákat.
 
+**Állapot:** a hat képesség kódja bent van. Indítás: [README](../../README.md). Station: [station/](../../station/).
+
 | Képesség | Dokumentum | Üzleti felelősség egy mondatban |
 |---|---|---|
 | Userek, kit | [user-alerts.md](user-alerts.md) | Meghívás, default JSON másolat, élő szerkesztés, hu/en szabályfile. |
