@@ -1,8 +1,17 @@
 # Döntés-fixturek a gyűjtött korpuszból
 
-A döntésmotor (Fázis 4) még nincs. Ez a mappa a **gyűjtőből** származó élő normalizált eseményekből rak össze egy létrát: egyszerű egyértelmű találat/melléfogás → küszöb → rossz instrumentum → témaillesztés → zaj → szüneteltetett user.
+A native döntésmotor a [golden truth](golden-truth.md) 65 mintáján F₁ = 1.00. Ez a mappa a **gyűjtőből** származó élő normalizált eseményekből rak össze egy létrát: egyszerű egyértelmű találat/melléfogás → küszöb → rossz instrumentum → témaillesztés → zaj → szüneteltetett user.
 
 A nyers feed **nem** megy a döntésnek. Csak a `selected.json` alak.
+
+## Értékelés (tökéletesítés)
+
+1. `GoldenTruthTest` — élő GPT nélkül, FIRE/NO + csatorna + szint a 13×5 mintán.
+2. MCP `score_golden` vagy Tower **Golden F₁** — ugyanaz a native korpusz, családonkénti F₁.
+3. Téves `(esemény, user)` → [accuracy.md](accuracy.md) tévesztésnapló, majd policy/matcher/kit.
+4. FIRE-t a modell **nem** írja felül. AI csak magyarázat; élő GPT nem CI.
+
+Szándékosan később: D9 összevonás, AI FIRE-felülírás, árnyék.
 
 ## Korpusz (2026-09-16)
 

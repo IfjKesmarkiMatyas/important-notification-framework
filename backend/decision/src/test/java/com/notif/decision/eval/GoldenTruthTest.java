@@ -22,6 +22,7 @@ class GoldenTruthTest {
         GoldenEvaluator evaluator = new GoldenEvaluator(engine, new JsonMapper());
 
         var score = evaluator.score();
+        System.out.println(GoldenReport.markdown(score));
 
         assertThat(score.mismatches())
                 .as("native mismatches: %s", score.mismatches())
@@ -32,5 +33,8 @@ class GoldenTruthTest {
         assertThat(score.fn()).isZero();
         assertThat(score.tn()).isEqualTo(58);
         assertThat(score.f1()).isEqualTo(1.0);
+        assertThat(score.fireLevelChecked()).isEqualTo(7);
+        assertThat(score.fireLevelOk()).isEqualTo(7);
+        assertThat(score.fires()).hasSize(7);
     }
 }

@@ -176,6 +176,12 @@ export class TowerPage {
     return score.f1.toFixed(2);
   }
 
+  familyLine(score: GoldenScore): string {
+    return (score.byFamily ?? [])
+      .map((slice) => `${slice.name} F₁ ${slice.f1 == null ? '—' : slice.f1.toFixed(2)}`)
+      .join(' · ');
+  }
+
   private loadTrail(eventId: string): void {
     this.decisions.trail(eventId).subscribe({
       next: (rows) => this.trail.set(rows),

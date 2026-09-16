@@ -162,7 +162,8 @@ class NotifMcpToolsTest {
 
     @Test
     void scoreGoldenSerializesEvaluator() {
-        var score = new com.notif.common.dto.decision.GoldenScore(65, 7, 0, 0, 58, 1.0, 1.0, 1.0, List.of());
+        var score = new com.notif.common.dto.decision.GoldenScore(
+                "native", 65, 7, 0, 0, 58, 1.0, 1.0, 1.0, 7, 7, List.of(), List.of(), List.of(), List.of());
         when(golden.score()).thenReturn(score);
         when(jsonMapper.writeValueAsString(score)).thenReturn("{\"f1\":1.0}");
         assertThat(tools.scoreGolden()).contains("1.0");

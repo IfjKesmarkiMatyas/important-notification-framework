@@ -38,7 +38,13 @@
     <p>
       n={{ score.n }} · TP {{ score.tp }} · FP {{ score.fp }} · FN {{ score.fn }} · TN {{ score.tn }} ·
       F₁ {{ formatF1(score) }}
+      @if (score.fireLevelChecked) {
+        · {{ i18n.t().levelsOk }} {{ score.fireLevelOk }}/{{ score.fireLevelChecked }}
+      }
     </p>
+    @if (familyLine(score)) {
+      <p class="mute small">{{ familyLine(score) }}</p>
+    }
   }
 </section>
 

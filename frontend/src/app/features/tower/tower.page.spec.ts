@@ -25,6 +25,7 @@ describe('TowerPage', () => {
     const instance = TestBed.runInInjectionContext(() => new TowerPage());
     http.expectOne('/api/admin/scrape/sources').flush([]);
     http.expectOne('/api/admin/scrape/events').flush([]);
+    http.expectOne('/api/admin/decision/switch').flush({ mode: 'native', openaiConfigured: false });
     return instance;
   }
 

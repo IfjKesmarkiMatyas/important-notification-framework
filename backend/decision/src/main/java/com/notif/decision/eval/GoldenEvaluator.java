@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import com.notif.common.domain.decision.AlertLevel;
 import com.notif.common.domain.decision.DecisionOutcome;
 import com.notif.common.domain.identity.UserRole;
 import com.notif.common.domain.identity.UserStatus;
@@ -43,6 +44,16 @@ public class GoldenEvaluator {
             "elena", List.of("email")
     );
 
+    private static final Map<String, AlertLevel> FIRE_LEVEL = Map.of(
+            "D2_clear_hit_quake_67|ada", AlertLevel.critical,
+            "D4_exact_threshold_60|ada", AlertLevel.critical,
+            "M2_btc_14d_span_hit|ada", AlertLevel.high,
+            "M2_btc_14d_span_hit|bela", AlertLevel.high,
+            "B1_telex_belfold_hit|ada", AlertLevel.medium,
+            "B3_bbc_world_miss_on_hu_kit|elena", AlertLevel.medium,
+            "B4_bbc_science_en_kit|elena", AlertLevel.medium
+    );
+
     private final NativeDecisionEngine engine;
     private final JsonMapper jsonMapper;
 
@@ -60,37 +71,77 @@ public class GoldenEvaluator {
         int fp = 0;
         int fn = 0;
         int tn = 0;
+        int fireLevelChecked = 0;
+        int fireLevelOk = 0;
         List<GoldenScore.Mismatch> mismatches = new ArrayList<>();
+        List<GoldenScore.FireCase> fires = new ArrayList<>();
+        Map<String, Acc> familyAcc = new LinkedHashMap<>();
+        Map<String, Acc> userAcc = new LinkedHashMap<>();
         for (Map.Entry<String, NormalizedEvent> entry : events.entrySet()) {
             String caseId = entry.getKey();
+            String family = entry.getValue().getFamily().name();
             for (AppUser user : users) {
-                String key = caseId + "|" + user.getDisplayName();
+                String userName = user.getDisplayName();
+                String key = caseId + "|" + userName;
                 NativeDecisionEngine.Verdict verdict = engine.evaluate(entry.getValue(), user);
                 boolean goldenFire = FIRE.contains(key);
                 boolean engineFire = verdict.outcome() == DecisionOutcome.fire;
-                List<String> expectedChannels = goldenFire ? FIRE_CHANNELS.getOrDefault(user.getDisplayName(), List.of()) : List.of();
+                List<String> expectedChannels = goldenFire ? FIRE_CHANNELS.getOrDefault(userName, List.of()) : List.of();
                 boolean channelsOk = !engineFire || expectedChannels.equals(verdict.channels());
+                Acc familyRow = familyAcc.computeIfAbsent(family, ignored -> new Acc());
+                Acc persona = userAcc.computeIfAbsent(userName, ignored -> new Acc());
                 if (goldenFire && engineFire && channelsOk) {
                     tp++;
+                    familyRow.tp++;
+                    persona.tp++;
+                    AlertLevel expectedLevel = FIRE_LEVEL.get(key);
+                    fireLevelChecked++;
+                    if (expectedLevel != null && expectedLevel == verdict.level()) {
+                        fireLevelOk++;
+                    } else {
+                        mismatches.add(new GoldenScore.Mismatch(
+                                caseId,
+                                userName,
+                                "LEVEL " + expectedLevel,
+                                "LEVEL " + verdict.level(),
+                                "LEVEL"
+                        ));
+                    }
+                    fires.add(new GoldenScore.FireCase(
+                            caseId,
+                            userName,
+                            family,
+                            verdict.level() == null ? null : verdict.level().name(),
+                            verdict.channels(),
+                            verdict.reason()
+                    ));
                 } else if (!goldenFire && !engineFire) {
                     tn++;
+                    familyRow.tn++;
+                    persona.tn++;
                 } else if (goldenFire && (!engineFire || !channelsOk)) {
                     fn++;
+                    familyRow.fn++;
+                    persona.fn++;
                     if (engineFire && !channelsOk) {
                         fp++;
+                        familyRow.fp++;
+                        persona.fp++;
                     }
                     mismatches.add(new GoldenScore.Mismatch(
                             caseId,
-                            user.getDisplayName(),
+                            userName,
                             "FIRE " + String.join(",", expectedChannels),
                             engineFire ? "FIRE " + String.join(",", verdict.channels()) : "NO",
                             engineFire ? "FP+FN" : "FN"
                     ));
                 } else {
                     fp++;
+                    familyRow.fp++;
+                    persona.fp++;
                     mismatches.add(new GoldenScore.Mismatch(
                             caseId,
-                            user.getDisplayName(),
+                            userName,
                             "NO",
                             "FIRE " + String.join(",", verdict.channels()),
                             "FP"
@@ -99,12 +150,23 @@ public class GoldenEvaluator {
             }
         }
         int n = events.size() * users.size();
-        Double precision = tp + fp == 0 ? null : tp / (double) (tp + fp);
-        Double recall = tp + fn == 0 ? null : tp / (double) (tp + fn);
-        Double f1 = precision == null || recall == null || precision + recall == 0
-                ? null
-                : 2 * precision * recall / (precision + recall);
-        return new GoldenScore(n, tp, fp, fn, tn, precision, recall, f1, mismatches);
+        return new GoldenScore(
+                "native",
+                n,
+                tp,
+                fp,
+                fn,
+                tn,
+                precision(tp, fp),
+                recall(tp, fn),
+                f1(tp, fp, fn),
+                fireLevelChecked,
+                fireLevelOk,
+                toSlices(familyAcc),
+                toSlices(userAcc),
+                fires,
+                mismatches
+        );
     }
 
     public Map<String, NormalizedEvent> loadEvents() {
@@ -242,5 +304,47 @@ public class GoldenEvaluator {
 
     public Set<String> fireKeys() {
         return new LinkedHashSet<>(FIRE);
+    }
+
+    private static List<GoldenScore.Slice> toSlices(Map<String, Acc> accs) {
+        List<GoldenScore.Slice> slices = new ArrayList<>();
+        for (Map.Entry<String, Acc> entry : accs.entrySet()) {
+            Acc acc = entry.getValue();
+            int n = acc.tp + acc.fp + acc.fn + acc.tn;
+            slices.add(new GoldenScore.Slice(
+                    entry.getKey(),
+                    n,
+                    acc.tp,
+                    acc.fp,
+                    acc.fn,
+                    acc.tn,
+                    f1(acc.tp, acc.fp, acc.fn)
+            ));
+        }
+        return slices;
+    }
+
+    private static Double precision(int tp, int fp) {
+        return tp + fp == 0 ? null : tp / (double) (tp + fp);
+    }
+
+    private static Double recall(int tp, int fn) {
+        return tp + fn == 0 ? null : tp / (double) (tp + fn);
+    }
+
+    private static Double f1(int tp, int fp, int fn) {
+        Double p = precision(tp, fp);
+        Double r = recall(tp, fn);
+        if (p == null || r == null || p + r == 0) {
+            return null;
+        }
+        return 2 * p * r / (p + r);
+    }
+
+    private static final class Acc {
+        int tp;
+        int fp;
+        int fn;
+        int tn;
     }
 }

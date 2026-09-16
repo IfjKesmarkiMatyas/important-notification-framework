@@ -24,6 +24,7 @@ export interface DecisionResult {
 }
 
 export interface GoldenScore {
+  engine?: string;
   n: number;
   tp: number;
   fp: number;
@@ -32,7 +33,31 @@ export interface GoldenScore {
   precision: number | null;
   recall: number | null;
   f1: number | null;
+  fireLevelChecked?: number;
+  fireLevelOk?: number;
+  byFamily?: GoldenSlice[];
+  byUser?: GoldenSlice[];
+  fires?: GoldenFireCase[];
   mismatches: GoldenMismatch[];
+}
+
+export interface GoldenSlice {
+  name: string;
+  n: number;
+  tp: number;
+  fp: number;
+  fn: number;
+  tn: number;
+  f1: number | null;
+}
+
+export interface GoldenFireCase {
+  caseId: string;
+  user: string;
+  family: string;
+  level: string | null;
+  channels: string[];
+  reason: string | null;
 }
 
 export interface GoldenMismatch {

@@ -43,10 +43,10 @@ Családonként a FIRE: disaster 2 (Ada D2, Ada D4), market 2 (Ada M2, Béla M2),
 
 Új motor / prompt / küszöb / S0-döntés = új sor. A nyers tévesztés a [tévesztésnaplóba](#tévesztésnapló) kerül.
 
-| Dátum | Agy | n | TP | FP | FN | TN | P | R | F₁ | Megjegyzés |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
-| 2026-09-16 | native | 65 | 7 | 0 | 0 | 58 | 1.00 | 1.00 | 1.00 | `GoldenTruthTest`, élő GPT nélkül; policy `gte` + `topicMode=any` |
-| 2026-09-16 | — | 65 | — | — | — | — | — | — | — | Döntésmotor nincs; baseline a golden nevező |
+| Dátum | Agy | n | TP | FP | FN | TN | P | R | F₁ | Szint | Megjegyzés |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
+| 2026-09-16 | native | 65 | 7 | 0 | 0 | 58 | 1.00 | 1.00 | 1.00 | 7/7 | `GoldenTruthTest` + `GoldenReport`; `gte` + `topicMode=any` |
+| 2026-09-16 | — | 65 | — | — | — | — | — | — | — | — | Döntésmotor nincs; baseline a golden nevező |
 
 Családonként (ha van motor, ugyanabból a futásból):
 
@@ -56,6 +56,16 @@ Családonként (ha van motor, ugyanabból a futásból):
 | market | M1 M2 M3 M4 | 20 | 2 | 1.00 |
 | breaking | B1 B2 B3 B4 B5 | 25 | 3 | 1.00 |
 
+Userenként (ugyanabból a futásból; Cora/Dénes F₁ `—`, mert nincs FIRE, P nevező 0):
+
+| User | n | TP | TN | F₁ |
+|---|---:|---:|---:|---|
+| Ada | 13 | 4 | 9 | 1.00 |
+| Béla | 13 | 1 | 12 | 1.00 |
+| Cora | 13 | 0 | 13 | — |
+| Dénes | 13 | 0 | 13 | — |
+| Elena | 13 | 2 | 11 | 1.00 |
+
 
 ## Fejlemények
 
@@ -63,6 +73,7 @@ Családonként (ha van motor, ugyanabból a futásból):
 |---|---|---|
 | 2026-09-16 | Golden létra + 65-ös nevező rögzítve (≥ 6, halmaz-téma, Dénes mindig NO) | Innét számolunk |
 | 2026-09-16 | Native matcher + `decision-policy.json` (`gte`, `topicMode=any`) | F₁ = 1.00, 0 mismatch |
+| 2026-09-16 | GoldenReport: szint + család/user bontás | FIRE szintek 7/7 (critical/high/medium) |
 | | S0: D4 ≥ vs „6.0 feletti” | Ha feletti: Ada D4 NO, FIRE 7→6, n marad 65 |
 
 ## Tévesztésnapló

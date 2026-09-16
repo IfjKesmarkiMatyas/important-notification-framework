@@ -107,7 +107,8 @@ export const STRINGS = {
     decideNow: 'Döntés most',
     emptyTrail: 'Erre az eseményre még nincs döntés.',
     scoreGolden: 'Golden F₁',
-    openaiReady: 'GPT kulcs beállítva'
+    openaiReady: 'GPT kulcs beállítva',
+    levelsOk: 'szint'
   },
   en: {
     brand: 'Notif',
@@ -214,6 +215,7 @@ export const STRINGS = {
     decideNow: 'Decide now',
     emptyTrail: 'No decisions for this event yet.',
     scoreGolden: 'Golden F₁',
-    openaiReady: 'GPT key configured'
+    openaiReady: 'GPT key configured',
+    levelsOk: 'levels'
   }
 } as const;
