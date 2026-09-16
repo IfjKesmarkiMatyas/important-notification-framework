@@ -43,6 +43,8 @@ Részletek: [07-questions-and-recommendations.md](07-questions-and-recommendatio
 | 9 | [09-v1-sources-and-branding.md](09-v1-sources-and-branding.md) | Telex, USGS, CoinGecko, feladó |
 | 10 | [10-delivery-ui-users/](10-delivery-ui-users/) | Fázis 1–2: delivery, meghívás emailben, Angular UI |
 | 11 | [11-decision-fixtures/](11-decision-fixtures/) | Gyűjtött korpusz → döntés-létra, golden truth, pontossági napló |
+| — | [transcript-user-prompts.md](transcript-user-prompts.md) | Csak a user promptok, időrendben |
+| — | [transcript.md](transcript.md) | Teljes Cursor export (válaszokkal) |
 
 ## Rövid kép
 
