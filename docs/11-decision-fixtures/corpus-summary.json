@@ -1,0 +1,22 @@
+{
+  "total": 1067,
+  "byFamily": {
+    "breaking": 165,
+    "disaster": 825,
+    "market": 77
+  },
+  "bySource": {
+    "bbc": 113,
+    "coingecko": 76,
+    "frankfurter": 1,
+    "telex": 52,
+    "usgs": 825
+  },
+  "disasterMag": {
+    "6_65": 6,
+    "5_6": 143,
+    "65_7": 2,
+    "4_5": 449,
+    "lt4": 225
+  }
+}

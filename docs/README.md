@@ -31,6 +31,7 @@ Részletek: [07-questions-and-recommendations.md](07-questions-and-recommendatio
 | 8 | [08-success-criteria.md](08-success-criteria.md) | Mikor tekintünk egy szeletet / a V1-et késznek |
 | 9 | [09-v1-sources-and-branding.md](09-v1-sources-and-branding.md) | Telex, USGS, CoinGecko, feladó |
 | 10 | [10-delivery-ui-users/](10-delivery-ui-users/) | Fázis 1–2: delivery, meghívás emailben, Angular UI |
+| 11 | [11-decision-fixtures/](11-decision-fixtures/) | Gyűjtött korpusz → döntés-létra, golden truth (Fázis 4 előtt) |
 
 ## Rövid kép
 
