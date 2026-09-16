@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Notif</title>
+</head>
+<body style="margin:0;padding:0;background:#0C0E12;color:#F4F1EA;font-family:Inter,Segoe UI,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#0C0E12;padding:40px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="480" cellspacing="0" cellpadding="0" style="background:#14181F;border:1px solid rgba(244,241,234,0.08);border-radius:12px;padding:32px;">
+          <tr>
+            <td style="font-size:13px;letter-spacing:0.12em;color:#C8F54A;text-transform:uppercase;">Notif</td>
+          </tr>
+          <tr>
+            <td style="padding-top:8px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#8A909A;" th:text="${level}">high</td>
+          </tr>
+          <tr>
+            <td style="padding-top:16px;font-size:22px;font-weight:600;" th:text="${heading}">Alert</td>
+          </tr>
+          <tr>
+            <td style="padding-top:12px;font-size:15px;line-height:1.5;color:#F4F1EA;" th:text="${body}">
+              Reason
+            </td>
+          </tr>
+          <tr th:if="${url}">
+            <td style="padding-top:16px;">
+              <a th:href="${url}" style="color:#C8F54A;" th:text="${url}">link</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

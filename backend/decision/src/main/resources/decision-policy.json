@@ -1,0 +1,5 @@
+{
+  "magnitudeCompare": "gte",
+  "moveCompare": "gte",
+  "topicMode": "any"
+}

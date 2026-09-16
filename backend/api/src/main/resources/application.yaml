@@ -59,3 +59,6 @@ notif:
     usgs-url: https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson
     coingecko-url: https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd,huf
     frankfurter-url: https://api.frankfurter.app/latest?from=EUR&to=HUF
+  decision:
+    openai-api-key: ${GPT_API_KEY:}
+    model: ${NOTIF_DECISION_MODEL:gpt-4o-mini}

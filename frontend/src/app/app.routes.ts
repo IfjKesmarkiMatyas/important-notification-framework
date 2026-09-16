@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
-import { adminGuard, authGuard, guestGuard } from './core/auth.guard';
-import { DefaultsPage } from './pages/defaults.page';
-import { DeliveryPage } from './pages/delivery.page';
-import { InvitePage } from './pages/invite.page';
-import { KitPage } from './pages/kit.page';
-import { LoginPage } from './pages/login.page';
-import { PeoplePage } from './pages/people.page';
-import { PersonKitPage } from './pages/person-kit.page';
-import { TowerPage } from './pages/tower.page';
+import { adminGuard, authGuard, guestGuard } from './core/auth/auth.guard';
+import { DefaultsPage } from './features/defaults/defaults.page';
+import { DeliveryPage } from './features/delivery/delivery.page';
+import { InvitePage } from './features/auth/invite.page';
+import { KitPage } from './features/kit/kit.page';
+import { LoginPage } from './features/auth/login.page';
+import { PeoplePage } from './features/people/people.page';
+import { PersonKitPage } from './features/people/person-kit.page';
+import { TowerPage } from './features/tower/tower.page';
 import { Shell } from './layout/shell';
 
 export const routes: Routes = [

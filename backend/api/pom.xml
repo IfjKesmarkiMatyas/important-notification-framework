@@ -14,6 +14,10 @@
   <dependencies>
     <dependency>
       <groupId>com.notif</groupId>
+      <artifactId>common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.notif</groupId>
       <artifactId>identity</artifactId>
     </dependency>
     <dependency>
@@ -23,6 +27,10 @@
     <dependency>
       <groupId>com.notif</groupId>
       <artifactId>scrape</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.notif</groupId>
+      <artifactId>decision</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

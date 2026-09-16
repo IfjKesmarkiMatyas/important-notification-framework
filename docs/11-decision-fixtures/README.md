@@ -16,7 +16,7 @@ A nyers feed **nem** megy a döntésnek. Csak a `selected.json` alak.
 Magnitúdó-eloszlás: 225 db &lt;4, 449 db 4–5, 143 db 5–6, 6 db 6–6.5, 2 db 6.5–7, **0 db 7+**.  
 Bitcoin 12 órás minták max elmozdulása **4.7%**; a 14 napos min→max (scrapelt árakból) **7.6%**.
 
-Részletek: [corpus-summary.json](corpus-summary.json). A kiválasztott 13 esemény: [selected.json](selected.json). Golden truth: [golden-truth.md](golden-truth.md).
+Részletek: [corpus-summary.json](corpus-summary.json). A kiválasztott 13 esemény: [selected.json](selected.json). Golden truth: [golden-truth.md](golden-truth.md). Pontosság (F₁, futások): [accuracy.md](accuracy.md).
 
 ## Kit-szereplők (native)
 
